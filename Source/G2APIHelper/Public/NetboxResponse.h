@@ -48,7 +48,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FStatus
+struct FResultStatus
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -93,7 +93,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FString Slug;
 	UPROPERTY(BlueprintReadWrite)
-	FStatus Status;
+	FResultStatus Status;
 	UPROPERTY(BlueprintReadWrite)
 	FRegion Region;
 	UPROPERTY(BlueprintReadWrite)
