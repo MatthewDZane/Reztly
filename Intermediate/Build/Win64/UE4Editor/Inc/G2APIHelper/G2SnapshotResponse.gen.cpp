@@ -28,7 +28,7 @@ void EmptyLinkFunctionForGeneratedCodeG2SnapshotResponse() {}
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FFlowLink();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FTopology();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FLink();
-	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FG2Node();
+	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FG2NodeStruct();
 // End Cross Module References
 class UScriptStruct* FG2SnapshotResponse::StaticStruct()
 {
@@ -1514,7 +1514,7 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFTopology
 	};
 #endif
 	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FTopology_Statics::NewProp_Links = { "Links", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FTopology, Links), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UScriptStruct_FTopology_Statics::NewProp_Links_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FTopology_Statics::NewProp_Links_MetaData)) };
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FTopology_Statics::NewProp_Nodes_Inner = { "Nodes", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UScriptStruct_FG2Node, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FTopology_Statics::NewProp_Nodes_Inner = { "Nodes", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UScriptStruct_FG2NodeStruct, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FTopology_Statics::NewProp_Nodes_MetaData[] = {
 		{ "Category", "Topology" },
@@ -1556,7 +1556,7 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFTopology
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FTopology_Hash() { return 361696625U; }
+	uint32 Get_Z_Construct_UScriptStruct_FTopology_Hash() { return 2845477535U; }
 class UScriptStruct* FLink::StaticStruct()
 {
 	static class UScriptStruct* Singleton = NULL;
@@ -1749,29 +1749,29 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFLink
 		return ReturnStruct;
 	}
 	uint32 Get_Z_Construct_UScriptStruct_FLink_Hash() { return 2274106170U; }
-class UScriptStruct* FG2Node::StaticStruct()
+class UScriptStruct* FG2NodeStruct::StaticStruct()
 {
 	static class UScriptStruct* Singleton = NULL;
 	if (!Singleton)
 	{
-		extern G2APIHELPER_API uint32 Get_Z_Construct_UScriptStruct_FG2Node_Hash();
-		Singleton = GetStaticStruct(Z_Construct_UScriptStruct_FG2Node, Z_Construct_UPackage__Script_G2APIHelper(), TEXT("G2Node"), sizeof(FG2Node), Get_Z_Construct_UScriptStruct_FG2Node_Hash());
+		extern G2APIHELPER_API uint32 Get_Z_Construct_UScriptStruct_FG2NodeStruct_Hash();
+		Singleton = GetStaticStruct(Z_Construct_UScriptStruct_FG2NodeStruct, Z_Construct_UPackage__Script_G2APIHelper(), TEXT("G2NodeStruct"), sizeof(FG2NodeStruct), Get_Z_Construct_UScriptStruct_FG2NodeStruct_Hash());
 	}
 	return Singleton;
 }
-template<> G2APIHELPER_API UScriptStruct* StaticStruct<FG2Node>()
+template<> G2APIHELPER_API UScriptStruct* StaticStruct<FG2NodeStruct>()
 {
-	return FG2Node::StaticStruct();
+	return FG2NodeStruct::StaticStruct();
 }
-static FCompiledInDeferStruct Z_CompiledInDeferStruct_UScriptStruct_FG2Node(FG2Node::StaticStruct, TEXT("/Script/G2APIHelper"), TEXT("G2Node"), false, nullptr, nullptr);
-static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFG2Node
+static FCompiledInDeferStruct Z_CompiledInDeferStruct_UScriptStruct_FG2NodeStruct(FG2NodeStruct::StaticStruct, TEXT("/Script/G2APIHelper"), TEXT("G2NodeStruct"), false, nullptr, nullptr);
+static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFG2NodeStruct
 {
-	FScriptStruct_G2APIHelper_StaticRegisterNativesFG2Node()
+	FScriptStruct_G2APIHelper_StaticRegisterNativesFG2NodeStruct()
 	{
-		UScriptStruct::DeferCppStructOps<FG2Node>(FName(TEXT("G2Node")));
+		UScriptStruct::DeferCppStructOps<FG2NodeStruct>(FName(TEXT("G2NodeStruct")));
 	}
-} ScriptStruct_G2APIHelper_StaticRegisterNativesFG2Node;
-	struct Z_Construct_UScriptStruct_FG2Node_Statics
+} ScriptStruct_G2APIHelper_StaticRegisterNativesFG2NodeStruct;
+	struct Z_Construct_UScriptStruct_FG2NodeStruct_Statics
 	{
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[];
@@ -1801,86 +1801,86 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFG2Node
 		static const UE4CodeGen_Private::FStructParams ReturnStructParams;
 	};
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2Node_Statics::Struct_MetaDataParams[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2NodeStruct_Statics::Struct_MetaDataParams[] = {
 		{ "BlueprintType", "true" },
 		{ "ModuleRelativePath", "Public/G2SnapshotResponse.h" },
 	};
 #endif
-	void* Z_Construct_UScriptStruct_FG2Node_Statics::NewStructOps()
+	void* Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewStructOps()
 	{
-		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FG2Node>();
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FG2NodeStruct>();
 	}
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_ID_MetaData[] = {
-		{ "Category", "G2Node" },
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_ID_MetaData[] = {
+		{ "Category", "G2NodeStruct" },
 		{ "ModuleRelativePath", "Public/G2SnapshotResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_ID = { "ID", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2Node, ID), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_ID_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_ID_MetaData)) };
+	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_ID = { "ID", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2NodeStruct, ID), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_ID_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_ID_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Info_MetaData[] = {
-		{ "Category", "G2Node" },
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Info_MetaData[] = {
+		{ "Category", "G2NodeStruct" },
 		{ "ModuleRelativePath", "Public/G2SnapshotResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2Node, Info), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Info_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Info_MetaData)) };
+	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Info = { "Info", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2NodeStruct, Info), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Info_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Info_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Latitude_MetaData[] = {
-		{ "Category", "G2Node" },
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Latitude_MetaData[] = {
+		{ "Category", "G2NodeStruct" },
 		{ "ModuleRelativePath", "Public/G2SnapshotResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Latitude = { "Latitude", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2Node, Latitude), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Latitude_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Latitude_MetaData)) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Latitude = { "Latitude", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2NodeStruct, Latitude), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Latitude_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Latitude_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Longitude_MetaData[] = {
-		{ "Category", "G2Node" },
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Longitude_MetaData[] = {
+		{ "Category", "G2NodeStruct" },
 		{ "ModuleRelativePath", "Public/G2SnapshotResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Longitude = { "Longitude", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2Node, Longitude), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Longitude_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Longitude_MetaData)) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Longitude = { "Longitude", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2NodeStruct, Longitude), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Longitude_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Longitude_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Name_MetaData[] = {
-		{ "Category", "G2Node" },
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Name_MetaData[] = {
+		{ "Category", "G2NodeStruct" },
 		{ "ModuleRelativePath", "Public/G2SnapshotResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2Node, Name), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Name_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Name_MetaData)) };
-	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FG2Node_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_ID,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Info,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Latitude,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Longitude,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2Node_Statics::NewProp_Name,
+	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FG2NodeStruct, Name), METADATA_PARAMS(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Name_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Name_MetaData)) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FG2NodeStruct_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_ID,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Info,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Latitude,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Longitude,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FG2NodeStruct_Statics::NewProp_Name,
 	};
-	const UE4CodeGen_Private::FStructParams Z_Construct_UScriptStruct_FG2Node_Statics::ReturnStructParams = {
+	const UE4CodeGen_Private::FStructParams Z_Construct_UScriptStruct_FG2NodeStruct_Statics::ReturnStructParams = {
 		(UObject* (*)())Z_Construct_UPackage__Script_G2APIHelper,
 		nullptr,
 		&NewStructOps,
-		"G2Node",
-		sizeof(FG2Node),
-		alignof(FG2Node),
-		Z_Construct_UScriptStruct_FG2Node_Statics::PropPointers,
-		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2Node_Statics::PropPointers),
+		"G2NodeStruct",
+		sizeof(FG2NodeStruct),
+		alignof(FG2NodeStruct),
+		Z_Construct_UScriptStruct_FG2NodeStruct_Statics::PropPointers,
+		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::PropPointers),
 		RF_Public|RF_Transient|RF_MarkAsNative,
 		EStructFlags(0x00000001),
-		METADATA_PARAMS(Z_Construct_UScriptStruct_FG2Node_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2Node_Statics::Struct_MetaDataParams))
+		METADATA_PARAMS(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FG2NodeStruct_Statics::Struct_MetaDataParams))
 	};
-	UScriptStruct* Z_Construct_UScriptStruct_FG2Node()
+	UScriptStruct* Z_Construct_UScriptStruct_FG2NodeStruct()
 	{
 #if WITH_HOT_RELOAD
-		extern uint32 Get_Z_Construct_UScriptStruct_FG2Node_Hash();
+		extern uint32 Get_Z_Construct_UScriptStruct_FG2NodeStruct_Hash();
 		UPackage* Outer = Z_Construct_UPackage__Script_G2APIHelper();
-		static UScriptStruct* ReturnStruct = FindExistingStructIfHotReloadOrDynamic(Outer, TEXT("G2Node"), sizeof(FG2Node), Get_Z_Construct_UScriptStruct_FG2Node_Hash(), false);
+		static UScriptStruct* ReturnStruct = FindExistingStructIfHotReloadOrDynamic(Outer, TEXT("G2NodeStruct"), sizeof(FG2NodeStruct), Get_Z_Construct_UScriptStruct_FG2NodeStruct_Hash(), false);
 #else
 		static UScriptStruct* ReturnStruct = nullptr;
 #endif
 		if (!ReturnStruct)
 		{
-			UE4CodeGen_Private::ConstructUScriptStruct(ReturnStruct, Z_Construct_UScriptStruct_FG2Node_Statics::ReturnStructParams);
+			UE4CodeGen_Private::ConstructUScriptStruct(ReturnStruct, Z_Construct_UScriptStruct_FG2NodeStruct_Statics::ReturnStructParams);
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FG2Node_Hash() { return 182170815U; }
+	uint32 Get_Z_Construct_UScriptStruct_FG2NodeStruct_Hash() { return 3449780434U; }
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 #ifdef _MSC_VER
 #pragma warning (pop)

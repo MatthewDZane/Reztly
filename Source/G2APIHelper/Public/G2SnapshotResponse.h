@@ -5,7 +5,7 @@
 #include "G2SnapshotResponse.generated.h"
 
 USTRUCT(BlueprintType)
-struct FG2Node
+struct FG2NodeStruct
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -56,7 +56,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FLink> Links;
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FG2Node> Nodes;
+	TArray<FG2NodeStruct> Nodes;
 };
 
 USTRUCT(BlueprintType)

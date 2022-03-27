@@ -19,7 +19,6 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"WhitelistPlatforms": [
-				"Win32",
 				"Win64"
 			]
 		}

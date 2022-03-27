@@ -2,47 +2,44 @@
 
 #include "JsonParser.h"
 #include <queue>
-#include <string>
 
 #include "JsonObjectConverter.h"
 
 TArray<FTimeStampIDPair> UJsonParser::StringToAvailableSnapshots(FString JsonString)
 {
 	TArray<FTimeStampIDPair> AvailableSnapshots;
-
-	std::string TempJsonString = TCHAR_TO_UTF8(*JsonString);
-	int StringLen = TempJsonString.length();
-	if (StringLen > 1)
+	
+	FString TempJsonString = JsonString;
+	if (TempJsonString.Len() > 1)
 	{
-		TempJsonString = TempJsonString.substr(1, StringLen);
-		StringLen--;
+		TempJsonString = TempJsonString.RightChop(1);
+	}
 
-		int OpenBracketIndex;
-		while ((OpenBracketIndex = TempJsonString.find("[")) != -1)
+	int OpenBracketIndex;
+	while ((OpenBracketIndex = TempJsonString.Find("[")) != -1)
+	{
+		TempJsonString = TempJsonString.RightChop(OpenBracketIndex + 1);
+		int CommaIndex = TempJsonString.Find(",");
+		if (CommaIndex == -1)
 		{
-			TempJsonString = TempJsonString.substr(OpenBracketIndex + 1, StringLen);
-			int CommaIndex = TempJsonString.find(",");
-			if (CommaIndex == -1)
-			{
-				break;
-			}
-
-			FTimeStampIDPair CurrentPair;
-			std::string TimeStampString = TempJsonString.substr(0, CommaIndex);
-
-			CurrentPair.TimeStamp = static_cast<int>(FCString::Atoi(*FString(TimeStampString.c_str())));
-			TempJsonString = TempJsonString.substr(CommaIndex + 1, TempJsonString.length());
-			int ClosedBracketIndex = TempJsonString.find("]");
-			if (ClosedBracketIndex == -1)
-			{
-				CurrentPair.ID = -1;
-				break;
-			}
-			std::string IDString = TempJsonString.substr(0, ClosedBracketIndex);
-			CurrentPair.ID = static_cast<int>(FCString::Atof(*FString(IDString.c_str())));
-
-			AvailableSnapshots.Add(CurrentPair);
+			break;
 		}
+
+		FTimeStampIDPair CurrentPair;
+		FString TimeStampString = TempJsonString.Left(CommaIndex);
+
+		CurrentPair.TimeStamp = FCString::Atoi(*TimeStampString);
+		TempJsonString = TempJsonString.RightChop(CommaIndex + 1);
+		int ClosedBracketIndex = TempJsonString.Find("]");
+		if (ClosedBracketIndex == -1)
+		{
+			CurrentPair.ID =  -1;
+			break;
+		}
+		FString IDString = TempJsonString.Left(ClosedBracketIndex);
+		CurrentPair.ID = (int)FCString::Atof(*IDString);
+
+		AvailableSnapshots.Add(CurrentPair);
 	}
 
 	return AvailableSnapshots;
@@ -66,128 +63,140 @@ FJsonObjectWrapper UJsonParser::StructToG2SnapshotObject(FG2SnapshotResponse Res
 {
 	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
 	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
-		<FG2SnapshotResponse>(Response);
+										<FG2SnapshotResponse>(Response);
 	return JsonWrapper;
+}
+
+FFlowInfo UJsonParser::StringToFlowInfo(FString JsonString)
+{
+	FFlowInfo Info;
+	if (FJsonObjectConverter::JsonObjectStringToUStruct(JsonString, &Info))
+	{
+		return Info;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Error: could not parse string"));
+		return FFlowInfo();
+	}
 }
 
 
 FUE4Response UJsonParser::StringToUE4Response(FString JsonString)
 {
-
+	
 	FUE4Response Response;
-
+	
 	// Remove outside parenthesis
-	std::string TempJsonString = TCHAR_TO_UTF8(*JsonString);
-	int StringLen = TempJsonString.length();
-	if (StringLen > 1)
+	FString TempJsonString = JsonString;
+	if (TempJsonString.Len() > 1)
 	{
-		TempJsonString = TempJsonString.substr(1, StringLen);
+		TempJsonString = TempJsonString.RightChop(1);
 	}
-	StringLen--;
-
+	
 	// Check for "nodes"
 	int NodesIndex;
-	if ((NodesIndex = TempJsonString.find("nodes")) == -1)
+	if ((NodesIndex = TempJsonString.Find("nodes")) == -1)
 	{
 		return Response;
 	}
-	TempJsonString = TempJsonString.substr(NodesIndex + 5, StringLen);
-
+	TempJsonString = TempJsonString.RightChop(NodesIndex + 5);
+	
 	// Parse nodes
 	int OpenSquareBracketIndex;
-	while ((OpenSquareBracketIndex = TempJsonString.find("[")) != -1 &&
-		OpenSquareBracketIndex < TempJsonString.find("edges"))
+	while ((OpenSquareBracketIndex = TempJsonString.Find("[")) != -1 &&
+			OpenSquareBracketIndex < TempJsonString.Find("edges"))
 	{
 		FUE4Node Node;
-		TempJsonString = TempJsonString.substr(OpenSquareBracketIndex + 1, TempJsonString.length());
-
+		TempJsonString = TempJsonString.RightChop(OpenSquareBracketIndex + 1);
+		
 		// Parse paths
-		while ((OpenSquareBracketIndex = TempJsonString.find("[")) != -1 &&
-			OpenSquareBracketIndex < TempJsonString.find("]"))
+		while ((OpenSquareBracketIndex = TempJsonString.Find("[")) != -1 &&
+			    OpenSquareBracketIndex < TempJsonString.Find("]"))
 		{
 			FPath Path;
-			TempJsonString = TempJsonString.substr(OpenSquareBracketIndex + 1, TempJsonString.length());
-
-			int ClosedSquareBracket = TempJsonString.find("]");
-			std::string PathString = TempJsonString.substr(0, ClosedSquareBracket);
-
+			TempJsonString = TempJsonString.RightChop(OpenSquareBracketIndex + 1);
+			
+			int ClosedSquareBracket = TempJsonString.Find("]");
+			FString PathString = TempJsonString.Left(ClosedSquareBracket);
+			
 			// Parse path IPs
 			int ParenthesizeIndex;
-			while ((ParenthesizeIndex = PathString.find("\"")) != -1)
+			while ((ParenthesizeIndex = PathString.Find("\"")) != -1)
 			{
-				PathString = PathString.substr(ParenthesizeIndex + 1);
-
-				if ((ParenthesizeIndex = PathString.find("\"")) == -1)
+				PathString = PathString.RightChop(ParenthesizeIndex + 1);
+				
+				if ((ParenthesizeIndex = PathString.Find("\"")) == -1)
 				{
 					break;
 				}
 
-				Path.Path.Add(FString(PathString.substr(0, ParenthesizeIndex).c_str()));
-				PathString = PathString.substr(ParenthesizeIndex + 1, TempJsonString.length());
-
+				Path.Path.Add(PathString.Left(ParenthesizeIndex));
+				PathString = PathString.RightChop(ParenthesizeIndex + 1);
+				
 			}
 			Node.Paths.Add(Path);
 
-			TempJsonString = TempJsonString.substr(ClosedSquareBracket + 1, TempJsonString.length());
+			TempJsonString = TempJsonString.RightChop(ClosedSquareBracket + 1);
 		}
-
-		Node.Hostname = GetStringValue(FString(TempJsonString.c_str()), "hostname");
-		Node.Ip = GetStringValue(FString(TempJsonString.c_str()), "ip");
-		Node.Latitude = GetFloatValue(FString(TempJsonString.c_str()), "latitude");
-		Node.Longitude = GetFloatValue(FString(TempJsonString.c_str()), "longitude");
-		Node.Primary = GetBoolValue(FString(TempJsonString.c_str()), "primary");
-
+		
+		Node.Hostname = GetStringValue(TempJsonString, "hostname");
+		Node.Ip = GetStringValue(TempJsonString, "ip");
+		Node.Latitude = GetFloatValue(TempJsonString, "latitude");
+		Node.Longitude = GetFloatValue(TempJsonString, "longitude");
+		Node.Primary = GetBoolValue(TempJsonString, "primary");
+		
 		Response.Nodes.Add(Node);
 	}
-
+	
 	// Check for "edges"
 	int EdgesIndex;
-	if ((EdgesIndex = TempJsonString.find("edges")) == -1)
+	if ((EdgesIndex = TempJsonString.Find("edges")) == -1)
 	{
 		return Response;
 	}
-	TempJsonString = TempJsonString.substr(EdgesIndex + 5, TempJsonString.length());
+	TempJsonString = TempJsonString.RightChop(EdgesIndex + 5);
 
 	// Parse edges
-	while ((OpenSquareBracketIndex = TempJsonString.find("[")) != -1)
+	while ((OpenSquareBracketIndex = TempJsonString.Find("[")) != -1)
 	{
 		FUE4Edge Edge;
-		TempJsonString = TempJsonString.substr(OpenSquareBracketIndex + 1, TempJsonString.length());
+		TempJsonString = TempJsonString.RightChop(OpenSquareBracketIndex + 1);
 
-		Edge.Source = GetFloatValue(FString(TempJsonString.c_str()), "source");
-		Edge.Target = GetFloatValue(FString(TempJsonString.c_str()), "target");
-		Edge.Mtu = GetFloatValue(FString(TempJsonString.c_str()), "mtu");
-		Edge.Latency = GetFloatValue(FString(TempJsonString.c_str()), "latency");
-
+		Edge.Source = GetFloatValue(TempJsonString, "source");
+		Edge.Target = GetFloatValue(TempJsonString, "target");
+		Edge.Mtu = GetFloatValue(TempJsonString, "mtu");
+		Edge.Latency = GetFloatValue(TempJsonString, "latency");
+		
 		// Parse paths
-		while ((OpenSquareBracketIndex = TempJsonString.find("[")) != -1 &&
-			OpenSquareBracketIndex < TempJsonString.find("]"))
+		while ((OpenSquareBracketIndex = TempJsonString.Find("[")) != -1 &&
+				OpenSquareBracketIndex < TempJsonString.Find("]"))
 		{
 			FPath Path;
-			TempJsonString = TempJsonString.substr(OpenSquareBracketIndex + 1, TempJsonString.length());
-
-			int ClosedSquareBracket = TempJsonString.find("]");
-			std::string PathString = TempJsonString.substr(0, ClosedSquareBracket);
-
+			TempJsonString = TempJsonString.RightChop(OpenSquareBracketIndex + 1);
+			
+			int ClosedSquareBracket = TempJsonString.Find("]");
+			FString PathString = TempJsonString.Left(ClosedSquareBracket);
+			
 			// Parse path IPs
 			int ParenthesizeIndex;
-			while ((ParenthesizeIndex = PathString.find("\"")) != -1)
+			while ((ParenthesizeIndex = PathString.Find("\"")) != -1)
 			{
-				PathString = PathString.substr(ParenthesizeIndex + 1, PathString.length());
-
-				if ((ParenthesizeIndex = PathString.find("\"")) == -1)
+				PathString = PathString.RightChop(ParenthesizeIndex + 1);
+				
+				if ((ParenthesizeIndex = PathString.Find("\"")) == -1)
 				{
 					break;
 				}
 
-				Path.Path.Add(FString(PathString.substr(0, ParenthesizeIndex).c_str()));
-				PathString = PathString.substr(ParenthesizeIndex + 1, PathString.length());
+				Path.Path.Add(PathString.Left(ParenthesizeIndex));
+				PathString = PathString.RightChop(ParenthesizeIndex + 1);
 			}
 			Edge.Paths.Add(Path);
 
-			TempJsonString = TempJsonString.substr(ClosedSquareBracket + 1, TempJsonString.length());
+			TempJsonString = TempJsonString.RightChop(ClosedSquareBracket + 1);
 		}
-
+				
 		Response.Edges.Add(Edge);
 	}
 	return Response;
@@ -197,7 +206,7 @@ FJsonObjectWrapper UJsonParser::StructToUE4ResponseObject(FUE4Response Response)
 {
 	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
 	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
-		<FUE4Response>(Response);
+										<FUE4Response>(Response);
 	return JsonWrapper;
 }
 
@@ -219,21 +228,21 @@ FJsonObjectWrapper UJsonParser::StructToNetboxResponseObject(FNetboxResponse Res
 {
 	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
 	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
-		<FNetboxResponse>(Response);
+										<FNetboxResponse>(Response);
 	return JsonWrapper;
 }
 
-FResult UJsonParser::StringToResult(FString JsonString)
+TArray<FResult> UJsonParser::StringToResult(FString JsonString)
 {
-	FResult Response;
-	if (FJsonObjectConverter::JsonObjectStringToUStruct(JsonString, &Response))
+	TArray<FResult> Results;
+	if (FJsonObjectConverter::JsonArrayStringToUStruct(JsonString, &Results))
 	{
-		return Response;
+		return Results;
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Error: could not parse string"));
-		return FResult();
+		return TArray<FResult>();
 	}
 }
 
@@ -241,23 +250,22 @@ FJsonObjectWrapper UJsonParser::StructToResultObject(FResult Response)
 {
 	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
 	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
-		<FResult>(Response);
+										<FResult>(Response);
 	return JsonWrapper;
 }
 
-
 bool UJsonParser::FindFieldPath(FJsonObjectWrapper JsonWrapper,
-	FString FieldPath)
+								FString FieldPath)
 {
 	// Create queue from field path string
 	std::queue<FString> Fields;
 	int PeriodIndex;
 	FString TempPath = FieldPath;
-	while ((PeriodIndex = TempPath.Find(".")) != -1)
+	while ((PeriodIndex = TempPath.Find(".")) != -1) 
 	{
 		Fields.push(TempPath.Left(PeriodIndex));
 		TempPath = TempPath.RightChop(PeriodIndex + 1);
-	}
+	} 
 	Fields.push(TempPath);
 
 	return FindField(JsonWrapper.JsonObject, Fields);
@@ -269,7 +277,7 @@ FString UJsonParser::GetStringValue(FString JsonString, FString Field)
 	int FieldIndex = JsonString.Find(Field);
 	if (FieldIndex != -1)
 	{
-
+		
 		JsonString = JsonString.RightChop(FieldIndex + Field.Len() + 1);
 		int ParenthesizeIndex = JsonString.Find("\"");
 		JsonString = JsonString.RightChop(ParenthesizeIndex + 1);
@@ -289,7 +297,7 @@ float UJsonParser::GetFloatValue(FString JsonString, FString Field)
 	{
 		JsonString = JsonString.RightChop(FieldIndex + Field.Len() + 2);
 		int EndOfFloatIndex = FGenericPlatformMath::Min(JsonString.Find(","),
-			JsonString.Find("]"));
+														JsonString.Find("]"));
 		return FCString::Atof(*JsonString.Left(EndOfFloatIndex));
 	}
 	else
@@ -303,13 +311,13 @@ bool UJsonParser::GetBoolValue(FString JsonString, FString Field)
 	int FieldIndex = JsonString.Find(Field);
 	if (FieldIndex != -1)
 	{
-
+		
 		JsonString = JsonString.RightChop(FieldIndex + 1);
 		int ParenthesizeIndex = JsonString.Find("\"");
-
+		
 		JsonString = JsonString.RightChop(ParenthesizeIndex + 2);
 		int EndOfFloatIndex = FGenericPlatformMath::Min(JsonString.Find(","),
-			JsonString.Find("}"));
+														JsonString.Find("}"));
 		FString ValuesString = JsonString.Left(EndOfFloatIndex);
 		return ValuesString.Contains("true") || ValuesString.Contains("True");
 	}
@@ -320,26 +328,28 @@ bool UJsonParser::GetBoolValue(FString JsonString, FString Field)
 }
 
 bool UJsonParser::FindField(TSharedPtr<FJsonObject> JsonObject,
-	std::queue<FString> Fields)
+							std::queue<FString> Fields)
 {
-	std::string CurrentField = TCHAR_TO_UTF8(*Fields.front());
+	FString CurrentField = Fields.front();
 
 	// Check if Current field is an array
 	unsigned int OpenBracketIndex;
-	bool FieldIsArray = (OpenBracketIndex = CurrentField.find("[")) != -1;
+	int ArrayIndex;
+	bool FieldIsArray = (OpenBracketIndex = CurrentField.Find("[")) != -1;
 
 	TSharedPtr<FJsonObject> InnerObject = nullptr;
 	if (FieldIsArray)
 	{
 		// Separate Field name from ArrayIndex
-		unsigned int CloseBracketIndex = CurrentField.find("]");
-		std::string IndexString = CurrentField.substr(OpenBracketIndex + 1, CloseBracketIndex);
-		int ArrayIndex = std::atoi(IndexString.c_str());
-		CurrentField = CurrentField.substr(0, OpenBracketIndex);
+		unsigned int CloseBracketIndex = CurrentField.Find("]");
+		FString IndexString = CurrentField.Mid(OpenBracketIndex + 1,
+									CloseBracketIndex - OpenBracketIndex - 1);
+		ArrayIndex = FCString::Atoi(*IndexString);
+		CurrentField = CurrentField.Left(OpenBracketIndex);
 
 		// Get Array Field
 		const TArray<TSharedPtr<FJsonValue>>* JsonArray;
-		if (JsonObject->TryGetArrayField(FString(CurrentField.c_str()), JsonArray))
+		if (JsonObject->TryGetArrayField(CurrentField, JsonArray))
 		{
 			if (ArrayIndex != -1 && JsonArray->Num() > ArrayIndex)
 			{
@@ -348,9 +358,9 @@ bool UJsonParser::FindField(TSharedPtr<FJsonObject> JsonObject,
 		}
 	}
 	// Non array field
-	else if (JsonObject->HasField(FString(CurrentField.c_str())))
+	else if (JsonObject->HasField(CurrentField))
 	{
-		InnerObject = JsonObject->GetObjectField(FString(CurrentField.c_str()));
+		InnerObject = JsonObject->GetObjectField(CurrentField);
 	}
 
 	Fields.pop();
@@ -365,6 +375,6 @@ bool UJsonParser::FindField(TSharedPtr<FJsonObject> JsonObject,
 			return true;
 		}
 	}
-
+	
 	return false;
 }

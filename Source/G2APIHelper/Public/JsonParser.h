@@ -5,6 +5,7 @@
 #include "G2SnapshotResponse.h"
 #include "UE4Response.h"
 #include "TimeStampIDPair.h"
+#include "FlowInfo.h"
 
 #include <queue>
 #include "CoreMinimal.h"
@@ -34,11 +35,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static FG2SnapshotResponse StringToG2SnapshotResponse(FString JsonString);
 	
+
 	/**
 	* Converts a FG2SnapshotResponse to a FJsonObjectWrapper
 	*/
 	UFUNCTION(BlueprintCallable)
 	static FJsonObjectWrapper StructToG2SnapshotObject(FG2SnapshotResponse Response);
+
+	/**
+	* Converts a G2 Flow Info String to a FFlowInfo struct
+	*/
+	UFUNCTION(BlueprintCallable)
+	static FFlowInfo StringToFlowInfo(FString JsonString);
 
 	// UE4 Response Functions
 	/**
@@ -68,10 +76,11 @@ public:
 
 	// Post Response Functions
 	/**
-	* Converts a Netbox Post Response FString to a FG2SnapshotResponse struct
+	* Converts a Netbox Post or Put Response FString to a TArray of
+	* FG2SnapshotResponse struct
 	*/
 	UFUNCTION(BlueprintCallable)
-	static FResult StringToResult(FString JsonString);
+	static TArray<FResult> StringToResult(FString JsonString);
 	
 	/**
 	* Converts a FResult to a FJsonObjectWrapper

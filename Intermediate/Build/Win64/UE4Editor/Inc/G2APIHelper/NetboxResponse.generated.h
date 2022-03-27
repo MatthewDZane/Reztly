@@ -13,42 +13,42 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define G2APIHELPER_NetboxResponse_generated_h
 
-#define HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_152_GENERATED_BODY \
+#define ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_152_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FNetboxResponse_Statics; \
 	G2APIHELPER_API static class UScriptStruct* StaticStruct();
 
 
 template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FNetboxResponse>();
 
-#define HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_83_GENERATED_BODY \
+#define ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_83_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FResult_Statics; \
 	G2APIHELPER_API static class UScriptStruct* StaticStruct();
 
 
 template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FResult>();
 
-#define HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_64_GENERATED_BODY \
+#define ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_64_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FRegion_Statics; \
 	G2APIHELPER_API static class UScriptStruct* StaticStruct();
 
 
 template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FRegion>();
 
-#define HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_53_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FStatus_Statics; \
+#define ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_53_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FResultStatus_Statics; \
 	G2APIHELPER_API static class UScriptStruct* StaticStruct();
 
 
-template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FStatus>();
+template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FResultStatus>();
 
-#define HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_45_GENERATED_BODY \
+#define ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_45_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTag_Statics; \
 	G2APIHELPER_API static class UScriptStruct* StaticStruct();
 
 
 template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FTag>();
 
-#define HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_10_GENERATED_BODY \
+#define ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h_10_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FCustomFields_Statics; \
 	G2APIHELPER_API static class UScriptStruct* StaticStruct();
 
@@ -56,7 +56,7 @@ template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FTag>();
 template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FCustomFields>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h
+#define CURRENT_FILE_ID ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_NetboxResponse_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

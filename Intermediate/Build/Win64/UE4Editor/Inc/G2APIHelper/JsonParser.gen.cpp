@@ -19,6 +19,7 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 	UPackage* Z_Construct_UPackage__Script_G2APIHelper();
 	JSONUTILITIES_API UScriptStruct* Z_Construct_UScriptStruct_FJsonObjectWrapper();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FTimeStampIDPair();
+	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FFlowInfo();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FG2SnapshotResponse();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FNetboxResponse();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FResult();
@@ -73,7 +74,7 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 		P_GET_PROPERTY(FStrProperty,Z_Param_JsonString);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		*(FResult*)Z_Param__Result=UJsonParser::StringToResult(Z_Param_JsonString);
+		*(TArray<FResult>*)Z_Param__Result=UJsonParser::StringToResult(Z_Param_JsonString);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UJsonParser::execStructToNetboxResponseObject)
@@ -106,6 +107,14 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		*(FUE4Response*)Z_Param__Result=UJsonParser::StringToUE4Response(Z_Param_JsonString);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UJsonParser::execStringToFlowInfo)
+	{
+		P_GET_PROPERTY(FStrProperty,Z_Param_JsonString);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(FFlowInfo*)Z_Param__Result=UJsonParser::StringToFlowInfo(Z_Param_JsonString);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UJsonParser::execStructToG2SnapshotObject)
@@ -141,6 +150,7 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 			{ "GetFloatValue", &UJsonParser::execGetFloatValue },
 			{ "GetStringValue", &UJsonParser::execGetStringValue },
 			{ "StringToAvailableSnapshots", &UJsonParser::execStringToAvailableSnapshots },
+			{ "StringToFlowInfo", &UJsonParser::execStringToFlowInfo },
 			{ "StringToG2SnapshotResponse", &UJsonParser::execStringToG2SnapshotResponse },
 			{ "StringToNetboxResponse", &UJsonParser::execStringToNetboxResponse },
 			{ "StringToResult", &UJsonParser::execStringToResult },
@@ -371,6 +381,44 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics
+	{
+		struct JsonParser_eventStringToFlowInfo_Parms
+		{
+			FString JsonString;
+			FFlowInfo ReturnValue;
+		};
+		static const UE4CodeGen_Private::FStrPropertyParams NewProp_JsonString;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::NewProp_JsonString = { "JsonString", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(JsonParser_eventStringToFlowInfo_Parms, JsonString), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(JsonParser_eventStringToFlowInfo_Parms, ReturnValue), Z_Construct_UScriptStruct_FFlowInfo, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::NewProp_JsonString,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::Function_MetaDataParams[] = {
+		{ "Comment", "/**\n\x09* Converts a G2 Flow Info String to a FFlowInfo struct\n\x09*/" },
+		{ "ModuleRelativePath", "Public/JsonParser.h" },
+		{ "ToolTip", "Converts a G2 Flow Info String to a FFlowInfo struct" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UJsonParser, nullptr, "StringToFlowInfo", nullptr, nullptr, sizeof(JsonParser_eventStringToFlowInfo_Parms), Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UJsonParser_StringToFlowInfo()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UJsonParser_StringToFlowInfo_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	struct Z_Construct_UFunction_UJsonParser_StringToG2SnapshotResponse_Statics
 	{
 		struct JsonParser_eventStringToG2SnapshotResponse_Parms
@@ -452,10 +500,11 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 		struct JsonParser_eventStringToResult_Parms
 		{
 			FString JsonString;
-			FResult ReturnValue;
+			TArray<FResult> ReturnValue;
 		};
 		static const UE4CodeGen_Private::FStrPropertyParams NewProp_JsonString;
-		static const UE4CodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_ReturnValue_Inner;
+		static const UE4CodeGen_Private::FArrayPropertyParams NewProp_ReturnValue;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
@@ -463,16 +512,18 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
 	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UJsonParser_StringToResult_Statics::NewProp_JsonString = { "JsonString", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(JsonParser_eventStringToResult_Parms, JsonString), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UJsonParser_StringToResult_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(JsonParser_eventStringToResult_Parms, ReturnValue), Z_Construct_UScriptStruct_FResult, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UJsonParser_StringToResult_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UScriptStruct_FResult, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UJsonParser_StringToResult_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(JsonParser_eventStringToResult_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UJsonParser_StringToResult_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UJsonParser_StringToResult_Statics::NewProp_JsonString,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UJsonParser_StringToResult_Statics::NewProp_ReturnValue_Inner,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UJsonParser_StringToResult_Statics::NewProp_ReturnValue,
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UJsonParser_StringToResult_Statics::Function_MetaDataParams[] = {
-		{ "Comment", "/**\n\x09* Converts a Netbox Post Response FString to a FG2SnapshotResponse struct\n\x09*/" },
+		{ "Comment", "/**\n\x09* Converts a Netbox Post or Put Response FString to a TArray of\n\x09* FG2SnapshotResponse struct\n\x09*/" },
 		{ "ModuleRelativePath", "Public/JsonParser.h" },
-		{ "ToolTip", "Converts a Netbox Post Response FString to a FG2SnapshotResponse struct" },
+		{ "ToolTip", "Converts a Netbox Post or Put Response FString to a TArray of\nFG2SnapshotResponse struct" },
 	};
 #endif
 	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UJsonParser_StringToResult_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UJsonParser, nullptr, "StringToResult", nullptr, nullptr, sizeof(JsonParser_eventStringToResult_Parms), Z_Construct_UFunction_UJsonParser_StringToResult_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UJsonParser_StringToResult_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UJsonParser_StringToResult_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UJsonParser_StringToResult_Statics::Function_MetaDataParams)) };
@@ -699,9 +750,10 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 		{ &Z_Construct_UFunction_UJsonParser_GetFloatValue, "GetFloatValue" }, // 942572873
 		{ &Z_Construct_UFunction_UJsonParser_GetStringValue, "GetStringValue" }, // 2517038023
 		{ &Z_Construct_UFunction_UJsonParser_StringToAvailableSnapshots, "StringToAvailableSnapshots" }, // 3340774150
+		{ &Z_Construct_UFunction_UJsonParser_StringToFlowInfo, "StringToFlowInfo" }, // 1082425450
 		{ &Z_Construct_UFunction_UJsonParser_StringToG2SnapshotResponse, "StringToG2SnapshotResponse" }, // 3642014767
 		{ &Z_Construct_UFunction_UJsonParser_StringToNetboxResponse, "StringToNetboxResponse" }, // 215148174
-		{ &Z_Construct_UFunction_UJsonParser_StringToResult, "StringToResult" }, // 694042867
+		{ &Z_Construct_UFunction_UJsonParser_StringToResult, "StringToResult" }, // 2086503505
 		{ &Z_Construct_UFunction_UJsonParser_StringToUE4Response, "StringToUE4Response" }, // 4265980857
 		{ &Z_Construct_UFunction_UJsonParser_StructToG2SnapshotObject, "StructToG2SnapshotObject" }, // 2673913528
 		{ &Z_Construct_UFunction_UJsonParser_StructToNetboxResponseObject, "StructToNetboxResponseObject" }, // 1009647034
@@ -742,7 +794,7 @@ void EmptyLinkFunctionForGeneratedCodeJsonParser() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UJsonParser, 3917696291);
+	IMPLEMENT_CLASS(UJsonParser, 2536149718);
 	template<> G2APIHELPER_API UClass* StaticClass<UJsonParser>()
 	{
 		return UJsonParser::StaticClass();

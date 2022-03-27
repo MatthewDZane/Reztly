@@ -16,7 +16,7 @@ void EmptyLinkFunctionForGeneratedCodeNetboxResponse() {}
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FNetboxResponse();
 	UPackage* Z_Construct_UPackage__Script_G2APIHelper();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FResult();
-	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FStatus();
+	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FResultStatus();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FRegion();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FTag();
 	G2APIHELPER_API UScriptStruct* Z_Construct_UScriptStruct_FCustomFields();
@@ -356,7 +356,7 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFResult
 		{ "ModuleRelativePath", "Public/NetboxResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FResult_Statics::NewProp_Status = { "Status", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FResult, Status), Z_Construct_UScriptStruct_FStatus, METADATA_PARAMS(Z_Construct_UScriptStruct_FResult_Statics::NewProp_Status_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FResult_Statics::NewProp_Status_MetaData)) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FResult_Statics::NewProp_Status = { "Status", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FResult, Status), Z_Construct_UScriptStruct_FResultStatus, METADATA_PARAMS(Z_Construct_UScriptStruct_FResult_Statics::NewProp_Status_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FResult_Statics::NewProp_Status_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FResult_Statics::NewProp_Region_MetaData[] = {
 		{ "Category", "Result" },
@@ -595,7 +595,7 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFResult
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FResult_Hash() { return 2721132253U; }
+	uint32 Get_Z_Construct_UScriptStruct_FResult_Hash() { return 2298807046U; }
 class UScriptStruct* FRegion::StaticStruct()
 {
 	static class UScriptStruct* Singleton = NULL;
@@ -740,29 +740,29 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFRegion
 		return ReturnStruct;
 	}
 	uint32 Get_Z_Construct_UScriptStruct_FRegion_Hash() { return 686796561U; }
-class UScriptStruct* FStatus::StaticStruct()
+class UScriptStruct* FResultStatus::StaticStruct()
 {
 	static class UScriptStruct* Singleton = NULL;
 	if (!Singleton)
 	{
-		extern G2APIHELPER_API uint32 Get_Z_Construct_UScriptStruct_FStatus_Hash();
-		Singleton = GetStaticStruct(Z_Construct_UScriptStruct_FStatus, Z_Construct_UPackage__Script_G2APIHelper(), TEXT("Status"), sizeof(FStatus), Get_Z_Construct_UScriptStruct_FStatus_Hash());
+		extern G2APIHELPER_API uint32 Get_Z_Construct_UScriptStruct_FResultStatus_Hash();
+		Singleton = GetStaticStruct(Z_Construct_UScriptStruct_FResultStatus, Z_Construct_UPackage__Script_G2APIHelper(), TEXT("ResultStatus"), sizeof(FResultStatus), Get_Z_Construct_UScriptStruct_FResultStatus_Hash());
 	}
 	return Singleton;
 }
-template<> G2APIHELPER_API UScriptStruct* StaticStruct<FStatus>()
+template<> G2APIHELPER_API UScriptStruct* StaticStruct<FResultStatus>()
 {
-	return FStatus::StaticStruct();
+	return FResultStatus::StaticStruct();
 }
-static FCompiledInDeferStruct Z_CompiledInDeferStruct_UScriptStruct_FStatus(FStatus::StaticStruct, TEXT("/Script/G2APIHelper"), TEXT("Status"), false, nullptr, nullptr);
-static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFStatus
+static FCompiledInDeferStruct Z_CompiledInDeferStruct_UScriptStruct_FResultStatus(FResultStatus::StaticStruct, TEXT("/Script/G2APIHelper"), TEXT("ResultStatus"), false, nullptr, nullptr);
+static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFResultStatus
 {
-	FScriptStruct_G2APIHelper_StaticRegisterNativesFStatus()
+	FScriptStruct_G2APIHelper_StaticRegisterNativesFResultStatus()
 	{
-		UScriptStruct::DeferCppStructOps<FStatus>(FName(TEXT("Status")));
+		UScriptStruct::DeferCppStructOps<FResultStatus>(FName(TEXT("ResultStatus")));
 	}
-} ScriptStruct_G2APIHelper_StaticRegisterNativesFStatus;
-	struct Z_Construct_UScriptStruct_FStatus_Statics
+} ScriptStruct_G2APIHelper_StaticRegisterNativesFResultStatus;
+	struct Z_Construct_UScriptStruct_FResultStatus_Statics
 	{
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[];
@@ -780,62 +780,62 @@ static struct FScriptStruct_G2APIHelper_StaticRegisterNativesFStatus
 		static const UE4CodeGen_Private::FStructParams ReturnStructParams;
 	};
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::Struct_MetaDataParams[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FResultStatus_Statics::Struct_MetaDataParams[] = {
 		{ "BlueprintType", "true" },
 		{ "ModuleRelativePath", "Public/NetboxResponse.h" },
 	};
 #endif
-	void* Z_Construct_UScriptStruct_FStatus_Statics::NewStructOps()
+	void* Z_Construct_UScriptStruct_FResultStatus_Statics::NewStructOps()
 	{
-		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FStatus>();
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FResultStatus>();
 	}
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Value_MetaData[] = {
-		{ "Category", "Status" },
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Value_MetaData[] = {
+		{ "Category", "ResultStatus" },
 		{ "ModuleRelativePath", "Public/NetboxResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Value = { "Value", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, Value), METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Value_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Value_MetaData)) };
+	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Value = { "Value", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FResultStatus, Value), METADATA_PARAMS(Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Value_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Value_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Label_MetaData[] = {
-		{ "Category", "Status" },
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Label_MetaData[] = {
+		{ "Category", "ResultStatus" },
 		{ "ModuleRelativePath", "Public/NetboxResponse.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Label = { "Label", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FStatus, Label), METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Label_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Label_MetaData)) };
-	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FStatus_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Value,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FStatus_Statics::NewProp_Label,
+	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Label = { "Label", nullptr, (EPropertyFlags)0x0010000000000004, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FResultStatus, Label), METADATA_PARAMS(Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Label_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Label_MetaData)) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FResultStatus_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Value,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FResultStatus_Statics::NewProp_Label,
 	};
-	const UE4CodeGen_Private::FStructParams Z_Construct_UScriptStruct_FStatus_Statics::ReturnStructParams = {
+	const UE4CodeGen_Private::FStructParams Z_Construct_UScriptStruct_FResultStatus_Statics::ReturnStructParams = {
 		(UObject* (*)())Z_Construct_UPackage__Script_G2APIHelper,
 		nullptr,
 		&NewStructOps,
-		"Status",
-		sizeof(FStatus),
-		alignof(FStatus),
-		Z_Construct_UScriptStruct_FStatus_Statics::PropPointers,
-		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::PropPointers),
+		"ResultStatus",
+		sizeof(FResultStatus),
+		alignof(FResultStatus),
+		Z_Construct_UScriptStruct_FResultStatus_Statics::PropPointers,
+		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FResultStatus_Statics::PropPointers),
 		RF_Public|RF_Transient|RF_MarkAsNative,
 		EStructFlags(0x00000001),
-		METADATA_PARAMS(Z_Construct_UScriptStruct_FStatus_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FStatus_Statics::Struct_MetaDataParams))
+		METADATA_PARAMS(Z_Construct_UScriptStruct_FResultStatus_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FResultStatus_Statics::Struct_MetaDataParams))
 	};
-	UScriptStruct* Z_Construct_UScriptStruct_FStatus()
+	UScriptStruct* Z_Construct_UScriptStruct_FResultStatus()
 	{
 #if WITH_HOT_RELOAD
-		extern uint32 Get_Z_Construct_UScriptStruct_FStatus_Hash();
+		extern uint32 Get_Z_Construct_UScriptStruct_FResultStatus_Hash();
 		UPackage* Outer = Z_Construct_UPackage__Script_G2APIHelper();
-		static UScriptStruct* ReturnStruct = FindExistingStructIfHotReloadOrDynamic(Outer, TEXT("Status"), sizeof(FStatus), Get_Z_Construct_UScriptStruct_FStatus_Hash(), false);
+		static UScriptStruct* ReturnStruct = FindExistingStructIfHotReloadOrDynamic(Outer, TEXT("ResultStatus"), sizeof(FResultStatus), Get_Z_Construct_UScriptStruct_FResultStatus_Hash(), false);
 #else
 		static UScriptStruct* ReturnStruct = nullptr;
 #endif
 		if (!ReturnStruct)
 		{
-			UE4CodeGen_Private::ConstructUScriptStruct(ReturnStruct, Z_Construct_UScriptStruct_FStatus_Statics::ReturnStructParams);
+			UE4CodeGen_Private::ConstructUScriptStruct(ReturnStruct, Z_Construct_UScriptStruct_FResultStatus_Statics::ReturnStructParams);
 		}
 		return ReturnStruct;
 	}
-	uint32 Get_Z_Construct_UScriptStruct_FStatus_Hash() { return 995422723U; }
+	uint32 Get_Z_Construct_UScriptStruct_FResultStatus_Hash() { return 1857193304U; }
 class UScriptStruct* FTag::StaticStruct()
 {
 	static class UScriptStruct* Singleton = NULL;

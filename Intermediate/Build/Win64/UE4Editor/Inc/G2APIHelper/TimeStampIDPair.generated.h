@@ -13,7 +13,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define G2APIHELPER_TimeStampIDPair_generated_h
 
-#define HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_TimeStampIDPair_h_10_GENERATED_BODY \
+#define ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_TimeStampIDPair_h_10_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTimeStampIDPair_Statics; \
 	G2APIHELPER_API static class UScriptStruct* StaticStruct();
 
@@ -21,7 +21,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 template<> G2APIHELPER_API UScriptStruct* StaticStruct<struct FTimeStampIDPair>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID HostProject_Plugins_G2APIHelper_Source_G2APIHelper_Public_TimeStampIDPair_h
+#define CURRENT_FILE_ID ARNoc_Alpha_Plugins_G2APIHelper_Source_G2APIHelper_Public_TimeStampIDPair_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
