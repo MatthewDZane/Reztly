@@ -22,11 +22,5 @@
 				"Win64"
 			]
 		}
-	],
-	"Plugins": [
-		{
-			"Name": "VaRest",
-			"Enabled": true
-		}
 	]
 }
