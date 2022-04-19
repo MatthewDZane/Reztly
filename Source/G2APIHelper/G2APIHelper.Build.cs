@@ -28,7 +28,6 @@ public class G2APIHelper : ModuleRules
 				"Core",
 				"Json",
 				"JsonUtilities",
-				"VaRest"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
