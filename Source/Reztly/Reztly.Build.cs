@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class G2APIHelper : ModuleRules
+public class Reztly : ModuleRules
 {
-	public G2APIHelper(ReadOnlyTargetRules Target) : base(Target)
+	public Reztly(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		

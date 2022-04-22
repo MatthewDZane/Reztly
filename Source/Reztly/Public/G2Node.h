@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class G2APIHELPER_API UG2Node : public UObject
+class REZTLY_API UG2Node : public UObject
 {
 	GENERATED_BODY()
 

@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FG2APIHelperModule : public IModuleInterface
+class FReztlyModule : public IModuleInterface
 {
 public:
 

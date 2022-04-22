@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Restly.h"
+#include "RestlyLibrary.h"
 
 void URestly::RequestBearerToken(FString G2Username, FString G2Password,
-							     FString G2APIUrl,
-							     FResponseDelegate OnBearerTokenResponseDelegate)
+                                 FString G2APIUrl,
+                                 FResponseDelegate OnBearerTokenResponseDelegate)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[G2Username, G2Password,

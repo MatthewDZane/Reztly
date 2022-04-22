@@ -19,7 +19,7 @@
  * 
  */
 UCLASS()
-class G2APIHELPER_API UJsonParser : public UBlueprintFunctionLibrary
+class REZTLY_API UJsonParser : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

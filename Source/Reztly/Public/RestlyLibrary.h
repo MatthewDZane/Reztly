@@ -10,7 +10,7 @@
 #include "RestlyResponse.h"
 #include "G2Node.h"
 
-#include "Restly.generated.h"
+#include "RestlyLibrary.generated.h"
 
 
 
@@ -18,7 +18,7 @@
  * 
  */
 UCLASS()
-class G2APIHELPER_API URestly : public UObject
+class REZTLY_API URestly : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	

@@ -2,8 +2,8 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "G2APIHelper",
-	"Description": "This plugin simplifies interacting with the G2 API within Unreal Engine 4.",
+	"FriendlyName": "Reztly",
+	"Description": "This plugin simplifies interacting with various Rest API services within Unreal Engine 4.",
 	"Category": "Other",
 	"CreatedBy": "Matthew Zane",
 	"CreatedByURL": "",
@@ -15,7 +15,7 @@
 	"Installed": true,
 	"Modules": [
 		{
-			"Name": "G2APIHelper",
+			"Name": "Reztly",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"WhitelistPlatforms": [

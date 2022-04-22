@@ -17,7 +17,7 @@ DECLARE_DYNAMIC_DELEGATE_TwoParams(FResponseDelegate, FString,
  * 
  */
 UCLASS()
-class G2APIHELPER_API URestlyResponse : public UObject
+class REZTLY_API URestlyResponse : public UObject
 {
 	GENERATED_BODY()
 
