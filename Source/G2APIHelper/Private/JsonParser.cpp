@@ -5,6 +5,21 @@
 
 #include "JsonObjectConverter.h"
 
+FString UJsonParser::ParseBearerToken(FString JsonString)
+{
+	TSharedPtr<FJsonObject> JsonResponse;
+	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(
+											JsonString);
+	if (FJsonSerializer::Deserialize(Reader, JsonResponse))
+	{
+		return JsonResponse->GetStringField("token");
+	}
+	else
+	{
+		return "";
+	}
+}
+
 TArray<FTimeStampIDPair> UJsonParser::StringToAvailableSnapshots(FString JsonString)
 {
 	TArray<FTimeStampIDPair> AvailableSnapshots;

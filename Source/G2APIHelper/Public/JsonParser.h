@@ -25,7 +25,18 @@ class G2APIHELPER_API UJsonParser : public UBlueprintFunctionLibrary
 
 public:
 	
-	// G2 Snapshot Functions
+	// G2 Snapshot Functions //
+	/**
+	 * Parses a G2 Bearer Token from a G2 Snapshot Response FString. Returns an
+	 * empty FString if the Json String is not deserializable or does not have
+	 * a "token" field.
+	 */
+	UFUNCTION(BlueprintCallable)
+	static FString ParseBearerToken(FString JsonString);
+	
+	/**
+	* Converts a G2 Snapshot Response FString to a FTimeStampIDPair struct
+	*/
 	UFUNCTION(BlueprintCallable)
 	static TArray<FTimeStampIDPair> StringToAvailableSnapshots(FString JsonString);
 	
@@ -35,7 +46,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static FG2SnapshotResponse StringToG2SnapshotResponse(FString JsonString);
 	
-
 	/**
 	* Converts a FG2SnapshotResponse to a FJsonObjectWrapper
 	*/
@@ -48,7 +58,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static FFlowInfo StringToFlowInfo(FString JsonString);
 
-	// UE4 Response Functions
+
+	// UE4 Response Functions //
 	/**
 	* Converts a UE4 Response FString to a FUE4Response struct
 	*/
@@ -61,7 +72,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static FJsonObjectWrapper StructToUE4ResponseObject(FUE4Response Response);
 
-	// Netbox Response Functions
+
+	// Netbox Response Functions //
 	/**
 	* Converts a Netbox Response FString to a FNetboxResponse struct
 	*/
@@ -74,7 +86,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static FJsonObjectWrapper StructToNetboxResponseObject(FNetboxResponse Response);
 
-	// Post Response Functions
+
+	// Post Response Functions //
 	/**
 	* Converts a Netbox Post or Put Response FString to a TArray of
 	* FG2SnapshotResponse struct
