@@ -7,10 +7,10 @@
 #include "Http.h"
 #include "JsonParser.h"
 
-#include "RestlyResponse.h"
+#include "ReztlyResponse.h"
 #include "G2Node.h"
 
-#include "RestlyLibrary.generated.h"
+#include "ReztlyLibrary.generated.h"
 
 
 
@@ -18,7 +18,7 @@
  * 
  */
 UCLASS()
-class REZTLY_API URestly : public UBlueprintFunctionLibrary
+class REZTLY_API UReztly : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	

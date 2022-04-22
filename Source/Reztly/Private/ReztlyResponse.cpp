@@ -1,25 +1,25 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "RestlyResponse.h"
+#include "ReztlyResponse.h"
 
 
-URestlyResponse::URestlyResponse()
+UReztlyResponse::UReztlyResponse()
 {
 	
 }
 
-FResponseDelegate URestlyResponse::GetDelegate()
+FResponseDelegate UReztlyResponse::GetDelegate()
 {
 	return Delegate;
 }
 
-void URestlyResponse::SetDelegate(FResponseDelegate DelegateIn)
+void UReztlyResponse::SetDelegate(FResponseDelegate DelegateIn)
 {
 	Delegate = DelegateIn;
 }
 
-void URestlyResponse::OnResponse(FHttpRequestPtr Request,
+void UReztlyResponse::OnResponse(FHttpRequestPtr Request,
 								 FHttpResponsePtr Response,
 								 bool bWasSuccessful) const {
 

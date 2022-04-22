@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "RestlyLibrary.h"
+#include "ReztlyLibrary.h"
 
-void URestly::RequestBearerToken(FString G2Username, FString G2Password,
+void UReztly::RequestBearerToken(FString G2Username, FString G2Password,
                                  FString G2APIUrl,
                                  FResponseDelegate OnBearerTokenResponseDelegate)
 {
@@ -11,7 +11,7 @@ void URestly::RequestBearerToken(FString G2Username, FString G2Password,
 		[G2Username, G2Password,
 		G2APIUrl, OnBearerTokenResponseDelegate] ()
 	{
-		URestlyResponse* BearerTokenResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* BearerTokenResponse = NewObject<UReztlyResponse>();
 		BearerTokenResponse->SetDelegate(OnBearerTokenResponseDelegate);
 		
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
@@ -23,7 +23,7 @@ void URestly::RequestBearerToken(FString G2Username, FString G2Password,
 		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
 		Request->SetHeader("Content-Type", "application/json");
 		Request->OnProcessRequestComplete().BindUObject(BearerTokenResponse,
-												&URestlyResponse::OnResponse);
+												&UReztlyResponse::OnResponse);
 
 		TSharedPtr<FJsonObject> RequestBody = MakeShareable(new FJsonObject);
 		RequestBody->SetStringField("username", G2Username);
@@ -42,20 +42,20 @@ void URestly::RequestBearerToken(FString G2Username, FString G2Password,
 	});
 }
 
-void URestly::RequestSnapshotRange(FString G2APIUrl, FString G2BearerToken,
+void UReztly::RequestSnapshotRange(FString G2APIUrl, FString G2BearerToken,
 								   FResponseDelegate OnSnapshotRangeResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[G2APIUrl, G2BearerToken, OnSnapshotRangeResponse] ()
 	{
-		URestlyResponse* SnapshotRangeResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
 		SnapshotRangeResponse->SetDelegate(OnSnapshotRangeResponse);
 			
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 		Request->OnProcessRequestComplete().BindUObject(
 			SnapshotRangeResponse,
-			&URestlyResponse::OnResponse);
+			&UReztlyResponse::OnResponse);
 
 		FString G2SnapshotRangeURL = G2APIUrl + "api/tsrange/-1/0";
 		Request->SetURL(G2SnapshotRangeURL);
@@ -71,20 +71,20 @@ void URestly::RequestSnapshotRange(FString G2APIUrl, FString G2BearerToken,
 	});
 }
 
-void URestly::RequestSnapshot(int SnapshotID, FString G2APIUrl, 
+void UReztly::RequestSnapshot(int SnapshotID, FString G2APIUrl, 
 							  FString G2BearerToken,
 							  FResponseDelegate OnSnapshotResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[SnapshotID, G2APIUrl, G2BearerToken, OnSnapshotResponse] ()
 	{
-		URestlyResponse* SnapshotResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* SnapshotResponse = NewObject<UReztlyResponse>();
 		SnapshotResponse->SetDelegate(OnSnapshotResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotResponse, &URestlyResponse::OnResponse);
+			SnapshotResponse, &UReztlyResponse::OnResponse);
 
 		FString SnapshotRequestURL = G2APIUrl + "api/snapshot?id=" + FString::FromInt(SnapshotID);
 		Request->SetURL(SnapshotRequestURL);
@@ -100,19 +100,19 @@ void URestly::RequestSnapshot(int SnapshotID, FString G2APIUrl,
 	});
 }
 
-void URestly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl, 
+void UReztly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl, 
 							         FResponseDelegate OnUE4NautilusDataResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[UE4NautilusDataUtilsUrl, OnUE4NautilusDataResponse] ()
 	{
-		URestlyResponse* SnapshotRangeResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
 		SnapshotRangeResponse->SetDelegate(OnUE4NautilusDataResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &URestlyResponse::OnResponse);
+			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
 
 		Request->SetURL(UE4NautilusDataUtilsUrl);
 
@@ -126,19 +126,19 @@ void URestly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl,
 	});
 }
 
-void URestly::RequestNetboxData(FString NetboxUrl, FString NetboxToken,
+void UReztly::RequestNetboxData(FString NetboxUrl, FString NetboxToken,
 					            FResponseDelegate OnNetboxDataResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[NetboxUrl, NetboxToken, OnNetboxDataResponse] ()
 	{
-		URestlyResponse* SnapshotRangeResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
 		SnapshotRangeResponse->SetDelegate(OnNetboxDataResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &URestlyResponse::OnResponse);
+			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
 
 		FString URL = NetboxUrl + "?cf_g2_node=true&limit=0&offset=0";
 		Request->SetURL(URL);
@@ -156,20 +156,20 @@ void URestly::RequestNetboxData(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void URestly::RequestNetboxPut(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
+void UReztly::RequestNetboxPut(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
 							   FString NetboxUrl, FString NetboxToken,
 							   FResponseDelegate OnNetboxPutResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[Nodes, NetboxIDs, NetboxUrl, NetboxToken, OnNetboxPutResponse] ()
 	{
-		URestlyResponse* SnapshotRangeResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
 		SnapshotRangeResponse->SetDelegate(OnNetboxPutResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &URestlyResponse::OnResponse);
+			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
 
 		FString URL = NetboxUrl;
 		Request->SetURL(URL);
@@ -217,7 +217,7 @@ void URestly::RequestNetboxPut(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
 	});
 }
 
-void URestly::RequestNetboxPost(TArray<UG2Node*> NewNodes, int HeighestNetboxId,
+void UReztly::RequestNetboxPost(TArray<UG2Node*> NewNodes, int HeighestNetboxId,
 						        FString NetboxUrl, FString NetboxToken, 
 					            FResponseDelegate OnNetboxPostResponse)
 {
@@ -225,13 +225,13 @@ void URestly::RequestNetboxPost(TArray<UG2Node*> NewNodes, int HeighestNetboxId,
 		[NewNodes, HeighestNetboxId, NetboxUrl, NetboxToken,
 		OnNetboxPostResponse] ()
 	{
-		URestlyResponse* SnapshotRangeResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
 		SnapshotRangeResponse->SetDelegate(OnNetboxPostResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &URestlyResponse::OnResponse);
+			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
 		
 		Request->SetURL(NetboxUrl);
 
@@ -276,20 +276,20 @@ void URestly::RequestNetboxPost(TArray<UG2Node*> NewNodes, int HeighestNetboxId,
 	});
 }
 
-void URestly::RequestNetboxPatch(UG2Node* Node, int NetboxID,
+void UReztly::RequestNetboxPatch(UG2Node* Node, int NetboxID,
 								 FString NetboxUrl, FString NetboxToken,
 								 FResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[Node, NetboxID, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
 	{
-		URestlyResponse* SnapshotRangeResponse = NewObject<URestlyResponse>();
+		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
 		SnapshotRangeResponse->SetDelegate(OnNetboxPatchResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &URestlyResponse::OnResponse);
+			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
 		
 		Request->SetURL(NetboxUrl + "/" + FString::FromInt(NetboxID));
 

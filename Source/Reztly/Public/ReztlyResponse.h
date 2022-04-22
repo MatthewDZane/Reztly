@@ -6,7 +6,7 @@
 #include "UObject/NoExportTypes.h"
 #include "Http.h"
 
-#include "RestlyResponse.generated.h"
+#include "ReztlyResponse.generated.h"
 
 
 DECLARE_DYNAMIC_DELEGATE_TwoParams(FResponseDelegate, FString,
@@ -17,12 +17,12 @@ DECLARE_DYNAMIC_DELEGATE_TwoParams(FResponseDelegate, FString,
  * 
  */
 UCLASS()
-class REZTLY_API URestlyResponse : public UObject
+class REZTLY_API UReztlyResponse : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	URestlyResponse();
+	UReztlyResponse();
 
 	UFUNCTION(BlueprintCallable)
 		FResponseDelegate GetDelegate();
