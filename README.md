@@ -39,27 +39,27 @@ Note: As of now this plugin has not been published on the Unreal Marketplace. Ma
 **Login**
 In order to access any of the data from G2, the user needs to first send a Login Request and provide Username and Password credentials, along with the G2 URL. If done correctly G2 should send back a Bearer Token which will be used in the next steps. Below is a Blueprint example of a Login:
 
-![Login Example](/Images/LoginExample.PNG)
+![Login Example](/Images/RequestBearerTokenExample.PNG)
 
 **Snapshot Range**
 To obtain a list of snapshots, which can be queried, the user needs to send a Snapshot Range Request, requires the previously obtained Bearer Token and the G2 URL. Below is a Blueprint example of a Snapshot Range Request:
 
-![Snapshot Range Example](/Images/SnapshotRangeExample.PNG)
+![Snapshot Range Example](/Images/RequestSnapshotRangeExample.PNG)
 
 **Snapshot Query**
 Like the previous operations, the user needs to provide the Bearer Token and the G2 URL, but in addition specifies a Snapshot ID to query for a specific snapshot. Below is a Blueprint example of a Snapshot Query:
 
-![Snapshot Query Example](/Images/SnapshotQueryExample.PNG)
+![Snapshot Query Example](/Images/RequestSnapshotExample.PNG)
 
 ### UE4
 To request the UE4 data, no information is required. Simply follow the example below:
 
-![UE4 Request Example](/Images/UE4RequestExample.PNG)
+![UE4 Request Example](/Images/RequestUE4NautilusDataExample.PNG)
 
 ### Netbox
 To request Netbox's data, the user needs to provde Netbox's URL, which should include any options needed to filter any items. Below is an example:
 
-![Netbox Query Example](/Images/NetboxQueryExample.PNG)
+![Netbox Query Example](/Images/RequestNetboxDataExample.PNG)
 
 ### Validating Responses
 **Struct to Json**
