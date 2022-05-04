@@ -26,7 +26,7 @@ public class Reztly : ModuleRules
 			new string[]
 			{
 				"Core",
-				"Http",
+				"HTTP",
 				"Json",
 				"JsonUtilities",
 				// ... add other public dependencies that you statically link with here ...
