@@ -1,0 +1,379 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "NetboxResponse.h"
+
+#include "NetboxDeviceResponse.generated.h"
+
+USTRUCT(BlueprintType)
+struct FManufacturer
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FString Slug;
+};
+
+USTRUCT(BlueprintType)
+struct FDeviceType
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FManufacturer Manufacturer;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FString Slug;
+};
+
+USTRUCT(BlueprintType)
+struct FDeviceRole
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FString Slug;
+};
+
+USTRUCT(BlueprintType)
+struct FPlatform
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FString Slug;
+};
+
+USTRUCT(BlueprintType)
+struct FAssetTag
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
+struct FDeviceSite
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FString Slug; 
+};
+
+USTRUCT(BlueprintType)
+struct FLocation
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FString Slug;
+	UPROPERTY(BlueprintReadWrite)
+	int _depth;
+};
+
+USTRUCT(BlueprintType)
+struct FRack
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	int _depth;
+};
+
+USTRUCT(BlueprintType)
+struct FFace
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	FString Value;
+	UPROPERTY(BlueprintReadWrite)
+	FString Label;
+};
+
+
+USTRUCT(BlueprintType)
+struct FDeviceBay
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	//UPROPERTY(BlueprintReadWrite)
+	//FDevice Device;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+
+};
+
+USTRUCT(BlueprintType)
+struct FParentDevice
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FDeviceBay Device_bay;
+};
+
+USTRUCT(BlueprintType)
+struct FAirflow
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
+struct FPrimaryIp
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Family;
+	UPROPERTY(BlueprintReadWrite)
+	FString Address;  
+};
+
+USTRUCT(BlueprintType)
+struct FCluster
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+};
+
+USTRUCT(BlueprintType)
+struct FVirtualChassis
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
+struct FVCPosition
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
+struct FVCPriority
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
+struct FLocalContextData
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
+struct FTag
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	
+};
+
+USTRUCT(BlueprintType)
+struct FCustomDeviceFields
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	FString Node_id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Info;
+	UPROPERTY(BlueprintReadWrite)
+	FString Ip;
+	UPROPERTY(BlueprintReadWrite)
+	int Mtu;
+	UPROPERTY(BlueprintReadWrite)
+	bool Override_location;
+	UPROPERTY(BlueprintReadWrite)
+	bool Primary;
+	UPROPERTY(BlueprintReadWrite)
+	FString Elevation;
+	UPROPERTY(BlueprintReadWrite)
+	FString Heading;
+	UPROPERTY(BlueprintReadWrite)
+	FString Pitch;
+	UPROPERTY(BlueprintReadWrite)
+	FString Roll;
+};
+
+USTRUCT(BlueprintType)
+struct FConfigContext
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
+struct FDevice
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FDeviceType Device_Type;
+	UPROPERTY(BlueprintReadWrite)
+	FDeviceRole Device_Role;
+	UPROPERTY(BlueprintReadWrite)
+	FTenant Tenant;
+	UPROPERTY(BlueprintReadWrite)
+	FPlatform Platform;
+	UPROPERTY(BlueprintReadWrite)
+	FString Serial;
+	UPROPERTY(BlueprintReadWrite)
+	FAssetTag Asset_Tag;
+	UPROPERTY(BlueprintReadWrite)
+	FDeviceSite Site;
+	UPROPERTY(BlueprintReadWrite)
+	FLocation Location;
+	UPROPERTY(BlueprintReadWrite)
+	FRack Rack;
+	UPROPERTY(BlueprintReadWrite)
+	int Position;
+	UPROPERTY(BlueprintReadWrite)
+	FFace Face;
+	UPROPERTY(BlueprintReadWrite)
+	FParentDevice Parent_device;
+	UPROPERTY(BlueprintReadWrite)
+	FNetboxStatus Status;
+	UPROPERTY(BlueprintReadWrite)
+	FAirflow Airflow;
+	UPROPERTY(BlueprintReadWrite)
+	FPrimaryIp Primary_ip;
+	UPROPERTY(BlueprintReadWrite)
+	FPrimaryIp Primary_ip4;
+	UPROPERTY(BlueprintReadWrite)
+	FPrimaryIp Primary_ip6;
+	UPROPERTY(BlueprintReadWrite)
+	FCluster Cluster;
+	UPROPERTY(BlueprintReadWrite)
+	FVirtualChassis Virtual_chassis;
+	UPROPERTY(BlueprintReadWrite)
+	FVCPosition Vc_position;
+	UPROPERTY(BlueprintReadWrite)
+	FVCPriority Vc_priority;
+	UPROPERTY(BlueprintReadWrite)
+	FString Comments;
+	UPROPERTY(BlueprintReadWrite)
+	FLocalContextData Local_context_data;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FTag> Tags;
+	UPROPERTY(BlueprintReadWrite)
+	FCustomDeviceFields Custom_fields;
+	UPROPERTY(BlueprintReadWrite)
+	FConfigContext Custom_context;
+	UPROPERTY(BlueprintReadWrite)
+	FString Created;
+	UPROPERTY(BlueprintReadWrite)
+	FString Last_updated; 
+};
+
+USTRUCT(BlueprintType)
+struct FNetboxDeviceResponse
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Count;
+	UPROPERTY(BlueprintReadWrite)
+	FString Next;
+	UPROPERTY(BlueprintReadWrite)
+	bool Previous;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FDevice> Results;
+};

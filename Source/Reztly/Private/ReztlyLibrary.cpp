@@ -106,13 +106,13 @@ void UReztly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl,
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[UE4NautilusDataUtilsUrl, OnUE4NautilusDataResponse] ()
 	{
-		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
-		SnapshotRangeResponse->SetDelegate(OnUE4NautilusDataResponse);
+		UReztlyResponse* UE4NautilusDataResponse = NewObject<UReztlyResponse>();
+		UE4NautilusDataResponse->SetDelegate(OnUE4NautilusDataResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
+			UE4NautilusDataResponse, &UReztlyResponse::OnResponse);
 
 		Request->SetURL(UE4NautilusDataUtilsUrl);
 
@@ -126,21 +126,21 @@ void UReztly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl,
 	});
 }
 
-void UReztly::RequestNetboxData(FString NetboxUrl, FString NetboxToken,
+void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
 					            FResponseDelegate OnNetboxDataResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[NetboxUrl, NetboxToken, OnNetboxDataResponse] ()
 	{
-		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
-		SnapshotRangeResponse->SetDelegate(OnNetboxDataResponse);
+		UReztlyResponse* NetboxDevicesGetResponse = NewObject<UReztlyResponse>();
+		NetboxDevicesGetResponse->SetDelegate(OnNetboxDataResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
+			NetboxDevicesGetResponse, &UReztlyResponse::OnResponse);
 
-		FString URL = NetboxUrl + "?cf_g2_node=true&limit=0&offset=0";
+		FString URL = NetboxUrl + "/dcim/devices/?limit=0&offset=0";
 		Request->SetURL(URL);
 
 		Request->SetVerb("GET");
@@ -156,84 +156,22 @@ void UReztly::RequestNetboxData(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void UReztly::RequestNetboxPut(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
-							   FString NetboxUrl, FString NetboxToken,
-							   FResponseDelegate OnNetboxPutResponse)
-{
-	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[Nodes, NetboxIDs, NetboxUrl, NetboxToken, OnNetboxPutResponse] ()
-	{
-		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
-		SnapshotRangeResponse->SetDelegate(OnNetboxPutResponse);
-
-		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
-		
-		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
-
-		FString URL = NetboxUrl;
-		Request->SetURL(URL);
-
-		Request->SetVerb("PUT");
-		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
-		Request->SetHeader("Content-Type", "application/json");
-		
-		FString AuthorizationValue = "Token " + NetboxToken;
-		Request->SetHeader("Authorization", AuthorizationValue);
-
-		FString RequestBodyString = "[";
-
-		for (int i = 0; i < Nodes.Num(); i++)
-		{
-			UG2Node* Node = Nodes[i];
-			int NetboxID = NetboxIDs[i];
-			FString NodeBodyString = "{\"id\":" + FString::FromInt(NetboxID) +
-					",\"name\":\"" + Node->ID + "\",\"slug\":\"" + Node->ID +
-					"\",\"custom_fields\":{\"g2_node\":true,\"g2_node_name\":\"" +
-					Node->GetName() + "\",\"info\":\"" + Node->Info +
-					"\",\"ip\":\"" + Node->IP + "\",\"latitude\":\"" +
-					FString::SanitizeFloat(Node->Latitude) +
-					"\",\"longitude\":\"" + FString::SanitizeFloat(Node->Longitude) +
-					"\",\"mtu\":" + FString::FromInt(Node->MTU) +
-					",\"primary\":" +
-					(Node->Primary ? FString("true") : FString("false")) +
-					",\"node_id\":\"" + Node->ID + "\",\"override_location\":false}}";
-
-			RequestBodyString += NodeBodyString;
-
-			if (i < Nodes.Num() - 1)
-			{
-				RequestBodyString += ",";
-			}
-		}
-		RequestBodyString += "]";
-		
-		Request->SetContentAsString(RequestBodyString);
-
-		UE_LOG(LogTemp, Warning, TEXT("PUT %s"), *Request->GetURL());
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *RequestBodyString);
-
-		Request->ProcessRequest();
-	});
-}
-
-void UReztly::RequestNetboxPost(TArray<UG2Node*> NewNodes, int HeighestNetboxId,
+void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> NewNodes,
 						        FString NetboxUrl, FString NetboxToken, 
 					            FResponseDelegate OnNetboxPostResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[NewNodes, HeighestNetboxId, NetboxUrl, NetboxToken,
-		OnNetboxPostResponse] ()
+		[NewNodes, NetboxUrl, NetboxToken,	OnNetboxPostResponse] ()
 	{
-		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
-		SnapshotRangeResponse->SetDelegate(OnNetboxPostResponse);
+		UReztlyResponse* NetboxDevicesPostResponse = NewObject<UReztlyResponse>();
+		NetboxDevicesPostResponse->SetDelegate(OnNetboxPostResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
+			NetboxDevicesPostResponse, &UReztlyResponse::OnResponse);
 		
-		Request->SetURL(NetboxUrl);
+		Request->SetURL(NetboxUrl + "dcim/devices");
 
 		Request->SetVerb("POST");
 		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
@@ -246,17 +184,14 @@ void UReztly::RequestNetboxPost(TArray<UG2Node*> NewNodes, int HeighestNetboxId,
 		FString RequestBodyString = "[";
 		for (int i = 0; i < NewNodes.Num(); i++) {
 			UG2Node* Node = NewNodes[i];
-			FString NodeBodyString =  "{\"site\":" +
-				FString::FromInt(HeighestNetboxId + i) + ",\"name\":\"" +
-				Node->ID + "\",\"slug\":\"" + Node->ID +
-				"\",\"custom_fields\":{\"g2_node\":true,\"node_id\":\"" +
+			FString NodeBodyString =  "{\"name\":\"" + Node->Name + "\"device_type\":" +
+				FString::FromInt(TBD_DEVICE_TYPE_ID) + ",\"site\":" +
+				FString::FromInt(TBD_SITE_ID) + ",\"custom_fields\":{\"node_id\":\"" +
 				Node->ID+ "\",\"info\":\"" + Node->Info +  "\",\"ip\":\"" +
-				Node->IP+ "\",\"latitude\":\"" +
-				FString::SanitizeFloat(Node->Latitude) + "\",\"longitude\":\"" +
-				FString::SanitizeFloat(Node->Longitude) + "\",\"mtu\":" +
+				Node->IP+ "\",\"mtu\":" +
 				FString::FromInt(Node->MTU) + ",\"primary\":" +
 				(Node->Primary ? FString("true") : FString("false")) +
-				",\"g2_node_name\":\"" + Node->Name + "\"}}";
+				",\"g2_node_id\":\"" + Node->ID + "\"}}";
 
 			RequestBodyString += NodeBodyString;
 
@@ -276,22 +211,106 @@ void UReztly::RequestNetboxPost(TArray<UG2Node*> NewNodes, int HeighestNetboxId,
 	});
 }
 
-void UReztly::RequestNetboxPatch(UG2Node* Node, int NetboxID,
+void UReztly::RequestNetboxDevicesPatch(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
 								 FString NetboxUrl, FString NetboxToken,
 								 FResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[Node, NetboxID, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
+		[Nodes, NetboxIDs, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
 	{
-		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
-		SnapshotRangeResponse->SetDelegate(OnNetboxPatchResponse);
+		UReztlyResponse* NetboxDevicesPatchResponse = NewObject<UReztlyResponse>();
+		NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotRangeResponse, &UReztlyResponse::OnResponse);
+			NetboxDevicesPatchResponse, &UReztlyResponse::OnResponse);
 		
-		Request->SetURL(NetboxUrl + "/" + FString::FromInt(NetboxID));
+		Request->SetURL(NetboxUrl + "/dcim/devices/");
+
+		Request->SetVerb("PATCH");
+		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+		Request->SetHeader("Content-Type", "application/json");
+	
+		FString AuthorizationValue = "Token " + NetboxToken;
+		Request->SetHeader("Authorization", AuthorizationValue);
+
+		FString RequestBodyString = "[";
+
+		for (int i = 0; i < Nodes.Num(); i++)
+		{
+			UG2Node* Node = Nodes[i];
+			int NetboxID = NetboxIDs[i];
+			FString NodeBodyString = "{\"id\":" + FString::FromInt(NetboxID) +
+					",\"name\":\"" + Node->Name + "\",\"custom_fields\":{\"info\":\"" +
+					Node->Info + "\",\"ip\":\"" + Node->IP + "\",\"mtu\":" +
+					FString::FromInt(Node->MTU) + ",\"primary\":" +
+					(Node->Primary ? FString("true") : FString("false")) +
+					",\"node_id\":\"" + Node->ID + "\"}}";
+
+			RequestBodyString += NodeBodyString;
+
+			if (i < Nodes.Num() - 1)
+			{
+				RequestBodyString += ",";
+			}
+		}
+		RequestBodyString += "]";
+	
+		Request->SetContentAsString(RequestBodyString);
+
+		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *RequestBodyString);
+
+		Request->ProcessRequest();
+	});
+}
+
+void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
+								FResponseDelegate OnNetboxDataResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[NetboxUrl, NetboxToken, OnNetboxDataResponse] ()
+	{
+		UReztlyResponse* NetboxSitesGetResponse = NewObject<UReztlyResponse>();
+		NetboxSitesGetResponse->SetDelegate(OnNetboxDataResponse);
+
+		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+		
+		Request->OnProcessRequestComplete().BindUObject(
+			NetboxSitesGetResponse, &UReztlyResponse::OnResponse);
+
+		FString URL = NetboxUrl + "/dcim/sites/?limit=0&offset=0";
+		Request->SetURL(URL);
+
+		Request->SetVerb("GET");
+		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+		Request->SetHeader("Content-Type", "application/json");
+		
+		FString AuthorizationValue = "Token " + NetboxToken;
+		Request->SetHeader("Authorization", AuthorizationValue);
+		
+		UE_LOG(LogTemp, Warning, TEXT("GET %s"), *Request->GetURL());
+
+		Request->ProcessRequest();
+	});
+}
+
+void UReztly::RequestNetboxSitePatch(FSite Site, FString NetboxUrl, FString NetboxToken,
+								 FResponseDelegate OnNetboxPatchResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Site, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
+	{
+		UReztlyResponse* NetboxDevicesPatchResponse = NewObject<UReztlyResponse>();
+		NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
+
+		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+		
+		Request->OnProcessRequestComplete().BindUObject(
+			NetboxDevicesPatchResponse, &UReztlyResponse::OnResponse);
+		
+		Request->SetURL(NetboxUrl + "/dcim/sites/");
 
 		Request->SetVerb("PATCH");
 		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
@@ -300,22 +319,14 @@ void UReztly::RequestNetboxPatch(UG2Node* Node, int NetboxID,
 		FString AuthorizationValue = "Token " + NetboxToken;
 		Request->SetHeader("Authorization", AuthorizationValue);
 
-		FString RequestBodyString = "{\"site\":" +
-				FString::FromInt(NetboxID) + ",\"name\":\"" + Node->ID+
-				"\",\"slug\":\"" + Node->ID +
-				"\",\"custom_fields\":{\"g2_node\":true,\"node_id\":\"" +
-				Node->ID+ "\",\"info\":\"" + Node->Info +  "\",\"ip\":\"" +
-				Node->IP+ "\",\"latitude\":\"" +
-				FString::SanitizeFloat(Node->Latitude) + "\",\"longitude\":\"" +
-				FString::SanitizeFloat(Node->Longitude) + "\",\"mtu\":" +
-				FString::FromInt(Node->MTU) + ",\"primary\":" +
-				(Node->Primary ? FString("true") : FString("false")) +
-				",\"g2_node_name\":\"" + Node->Name + "\"}}";
+		FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site.Id) + ",\"latitude\":" +
+			    FString::SanitizeFloat(Site.Latitude) + ",\"longitude\":" +
+			    FString::SanitizeFloat(Site.Longitude) + "}]";
 		
 		Request->SetContentAsString(RequestBodyString);
 
-		UE_LOG(LogTemp, Warning, TEXT("POST %s"), *Request->GetURL());
-		UE_LOG(LogTemp, Warning, TEXT("POST %s"), *RequestBodyString);
+		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *RequestBodyString);
 		
 		Request->ProcessRequest();
 	});

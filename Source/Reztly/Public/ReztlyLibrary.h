@@ -23,6 +23,9 @@ class REZTLY_API UReztly : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 	
 public:
+	static const int TBD_DEVICE_TYPE_ID = 83;
+	static const int TBD_SITE_ID = 67;
+	
 	UFUNCTION(BlueprintCallable)
 		static void RequestBearerToken(FString G2Username, FString G2Password,
 			                           FString G2APIUrl, 
@@ -43,24 +46,25 @@ public:
 			FResponseDelegate OnUE4NautliusDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxData(FString NetboxUrl, FString NetboxToken,
+		static void RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
                                       FResponseDelegate OnNetboxDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxPut(TArray<UG2Node*> Nodes,
-									 TArray<int> NetboxIDs,
-									 FString NetboxUrl, FString NetboxToken,
-									 FResponseDelegate OnNetboxPutResponse);
-
-	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxPost(TArray<UG2Node*> NewNodes,
-									  int HeighestNetboxId, FString NetboxUrl,
+		static void RequestNetboxDevicesPost(TArray<UG2Node*> NewNodes, FString NetboxUrl,
 									  FString NetboxToken, 
 							          FResponseDelegate OnNetboxPostResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxPatch(UG2Node* Node, int NetboxID,
+		static void RequestNetboxDevicesPatch(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
 							           FString NetboxUrl, FString NetboxToken,
 							           FResponseDelegate OnNetboxPatchResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
+									FResponseDelegate OnNetboxDataResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxSitePatch(FSite Site, FString NetboxUrl, FString NetboxToken,
+								   FResponseDelegate OnNetboxPatchResponse);
 						    
 };

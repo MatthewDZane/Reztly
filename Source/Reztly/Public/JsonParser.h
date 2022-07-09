@@ -6,12 +6,16 @@
 #include "UE4Response.h"
 #include "TimeStampIDPair.h"
 #include "FlowInfo.h"
+#include "ReztlyJson.h"
 
 #include <queue>
 #include "CoreMinimal.h"
 #include "JsonObjectWrapper.h"
-#include "NetboxResponse.h"
+#include "NetboxDeviceResponse.h"
+#include "NetboxSiteResponse.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+
+#include "JsonObjectConverter.h"
 
 #include "JsonParser.generated.h"
 
@@ -24,6 +28,8 @@ class REZTLY_API UJsonParser : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static UReztlyJson* StringToJson(FString JsonString);
 	
 	// G2 Snapshot Functions //
 	/**
@@ -73,18 +79,32 @@ public:
 	static FJsonObjectWrapper StructToUE4ResponseObject(FUE4Response Response);
 
 
-	// Netbox Response Functions //
+	// Netbox Device Response Functions //
 	/**
-	* Converts a Netbox Response FString to a FNetboxResponse struct
+	* Converts a Netbox Device Response FString to a FNetboxDeviceResponse struct
 	*/
 	UFUNCTION(BlueprintCallable)
-	static FNetboxResponse StringToNetboxResponse(FString JsonString);
+	static FNetboxDeviceResponse StringToNetboxDeviceResponse(FString JsonString);
 	
 	/**
-	* Converts a FNetboxResponse to a FJsonObjectWrapper
+	* Converts a FNetboxDeviceResponse to a FJsonObjectWrapper
 	*/
 	UFUNCTION(BlueprintCallable)
-	static FJsonObjectWrapper StructToNetboxResponseObject(FNetboxResponse Response);
+	static FJsonObjectWrapper StructToNetboxDeviceResponseObject(FNetboxDeviceResponse Response);
+
+
+	// Netbox Site Response Functions //
+	/**
+	* Converts a Netbox Site Response FString to a FNetboxSiteResponse struct
+	*/
+	UFUNCTION(BlueprintCallable)
+	static FNetboxSiteResponse StringToNetboxSiteResponse(FString JsonString);
+	
+	/**
+	* Converts a FNetboxSiteResponse to a FJsonObjectWrapper
+	*/
+	UFUNCTION(BlueprintCallable)
+	static FJsonObjectWrapper StructToNetboxSiteResponseObject(FNetboxSiteResponse Response);
 
 
 	// Post Response Functions //
@@ -93,13 +113,13 @@ public:
 	* FG2SnapshotResponse struct
 	*/
 	UFUNCTION(BlueprintCallable)
-	static TArray<FResult> StringToResult(FString JsonString);
+	static TArray<FDevice> StringToDevices(FString JsonString);
 	
 	/**
 	* Converts a FResult to a FJsonObjectWrapper
 	*/
 	UFUNCTION(BlueprintCallable)
-	static FJsonObjectWrapper StructToResultObject(FResult Response);
+	static FJsonObjectWrapper StructToDeviceObject(FDevice Response);
 
 	/**
 	* Returns whether the field is in the JsonWrapper. The layers
@@ -140,3 +160,4 @@ private:
 						  std::queue<FString> Fields);
 	
 };
+
