@@ -282,9 +282,9 @@ FJsonObjectWrapper UJsonParser::StructToNetboxSiteResponseObject(FNetboxSiteResp
 	return JsonWrapper;
 }
 
-TArray<FDevice> UJsonParser::StringToDevices(FString JsonString)
+TArray<FDeviceStruct> UJsonParser::StringToDevices(FString JsonString)
 {
-	TArray<FDevice> Results;
+	TArray<FDeviceStruct> Results;
 	if (FJsonObjectConverter::JsonArrayStringToUStruct(JsonString, &Results))
 	{
 		return Results;
@@ -292,15 +292,15 @@ TArray<FDevice> UJsonParser::StringToDevices(FString JsonString)
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Error: could not parse string"));
-		return TArray<FDevice>();
+		return TArray<FDeviceStruct>();
 	}
 }
 
-FJsonObjectWrapper UJsonParser::StructToDeviceObject(FDevice Response)
+FJsonObjectWrapper UJsonParser::StructToDeviceObject(FDeviceStruct Response)
 {
 	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
 	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
-										<FDevice>(Response);
+										<FDeviceStruct>(Response);
 	return JsonWrapper;
 }
 

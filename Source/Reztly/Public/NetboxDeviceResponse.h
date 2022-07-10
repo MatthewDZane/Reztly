@@ -264,11 +264,9 @@ struct FCustomDeviceFields
 	GENERATED_USTRUCT_BODY()
 public:
 	UPROPERTY(BlueprintReadWrite)
-	FString Node_id;
+	FString Node_ids;
 	UPROPERTY(BlueprintReadWrite)
 	FString Info;
-	UPROPERTY(BlueprintReadWrite)
-	FString Ip;
 	UPROPERTY(BlueprintReadWrite)
 	int Mtu;
 	UPROPERTY(BlueprintReadWrite)
@@ -293,7 +291,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FDevice
+struct FDeviceStruct
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -375,5 +373,5 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool Previous;
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FDevice> Results;
+	TArray<FDeviceStruct> Results;
 };

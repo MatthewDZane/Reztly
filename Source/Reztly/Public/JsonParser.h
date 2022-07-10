@@ -113,13 +113,13 @@ public:
 	* FG2SnapshotResponse struct
 	*/
 	UFUNCTION(BlueprintCallable)
-	static TArray<FDevice> StringToDevices(FString JsonString);
+	static TArray<FDeviceStruct> StringToDevices(FString JsonString);
 	
 	/**
 	* Converts a FResult to a FJsonObjectWrapper
 	*/
 	UFUNCTION(BlueprintCallable)
-	static FJsonObjectWrapper StructToDeviceObject(FDevice Response);
+	static FJsonObjectWrapper StructToDeviceObject(FDeviceStruct Response);
 
 	/**
 	* Returns whether the field is in the JsonWrapper. The layers

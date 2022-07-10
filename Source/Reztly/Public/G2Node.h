@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+
+#include "Device.h"
+
 #include "G2Node.generated.h"
 
 /**
@@ -39,4 +42,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int MTU;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		UDevice* Device;
 };

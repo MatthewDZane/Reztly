@@ -9,6 +9,7 @@
 
 #include "ReztlyResponse.h"
 #include "G2Node.h"
+#include "Site.h"
 
 #include "ReztlyLibrary.generated.h"
 
@@ -50,13 +51,13 @@ public:
                                       FResponseDelegate OnNetboxDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesPost(TArray<UG2Node*> NewNodes, FString NetboxUrl,
+		static void RequestNetboxDevicesPost(TArray<UG2Node*> Nodes, FString NetboxUrl,
 									  FString NetboxToken, 
 							          FResponseDelegate OnNetboxPostResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesPatch(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
-							           FString NetboxUrl, FString NetboxToken,
+		static void RequestNetboxDevicesPatch(TArray<UDevice*> Devices,
+									   FString NetboxUrl, FString NetboxToken,
 							           FResponseDelegate OnNetboxPatchResponse);
 
 	UFUNCTION(BlueprintCallable)
@@ -64,7 +65,7 @@ public:
 									FResponseDelegate OnNetboxDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxSitePatch(FSite Site, FString NetboxUrl, FString NetboxToken,
+		static void RequestNetboxSitePatch(USite* Site, FString NetboxUrl, FString NetboxToken,
 								   FResponseDelegate OnNetboxPatchResponse);
 						    
 };

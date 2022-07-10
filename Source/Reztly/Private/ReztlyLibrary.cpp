@@ -156,12 +156,12 @@ void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> NewNodes,
+void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> Nodes,
 						        FString NetboxUrl, FString NetboxToken, 
 					            FResponseDelegate OnNetboxPostResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[NewNodes, NetboxUrl, NetboxToken,	OnNetboxPostResponse] ()
+		[Nodes, NetboxUrl, NetboxToken,	OnNetboxPostResponse] ()
 	{
 		UReztlyResponse* NetboxDevicesPostResponse = NewObject<UReztlyResponse>();
 		NetboxDevicesPostResponse->SetDelegate(OnNetboxPostResponse);
@@ -182,20 +182,19 @@ void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> NewNodes,
 
 			
 		FString RequestBodyString = "[";
-		for (int i = 0; i < NewNodes.Num(); i++) {
-			UG2Node* Node = NewNodes[i];
+		for (int i = 0; i < Nodes.Num(); i++) {
+			UG2Node* Node = Nodes[i];
 			FString NodeBodyString =  "{\"name\":\"" + Node->Name + "\"device_type\":" +
 				FString::FromInt(TBD_DEVICE_TYPE_ID) + ",\"site\":" +
 				FString::FromInt(TBD_SITE_ID) + ",\"custom_fields\":{\"node_id\":\"" +
-				Node->ID+ "\",\"info\":\"" + Node->Info +  "\",\"ip\":\"" +
-				Node->IP+ "\",\"mtu\":" +
+				Node->ID + "\",\"info\":\"" + Node->Info + "\",\"mtu\":" +
 				FString::FromInt(Node->MTU) + ",\"primary\":" +
 				(Node->Primary ? FString("true") : FString("false")) +
 				",\"g2_node_id\":\"" + Node->ID + "\"}}";
 
 			RequestBodyString += NodeBodyString;
 
-			if (i < NewNodes.Num() - 1)
+			if (i < Nodes.Num() - 1)
 			{
 				RequestBodyString += ",";
 			}
@@ -211,12 +210,12 @@ void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> NewNodes,
 	});
 }
 
-void UReztly::RequestNetboxDevicesPatch(TArray<UG2Node*> Nodes, TArray<int> NetboxIDs,
+void UReztly::RequestNetboxDevicesPatch(TArray<UDevice*> Devices,
 								 FString NetboxUrl, FString NetboxToken,
 								 FResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[Nodes, NetboxIDs, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
+		[Devices, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
 	{
 		UReztlyResponse* NetboxDevicesPatchResponse = NewObject<UReztlyResponse>();
 		NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
@@ -237,20 +236,18 @@ void UReztly::RequestNetboxDevicesPatch(TArray<UG2Node*> Nodes, TArray<int> Netb
 
 		FString RequestBodyString = "[";
 
-		for (int i = 0; i < Nodes.Num(); i++)
+		for (int i = 0; i < Devices.Num(); i++)
 		{
-			UG2Node* Node = Nodes[i];
-			int NetboxID = NetboxIDs[i];
-			FString NodeBodyString = "{\"id\":" + FString::FromInt(NetboxID) +
-					",\"name\":\"" + Node->Name + "\",\"custom_fields\":{\"info\":\"" +
-					Node->Info + "\",\"ip\":\"" + Node->IP + "\",\"mtu\":" +
-					FString::FromInt(Node->MTU) + ",\"primary\":" +
-					(Node->Primary ? FString("true") : FString("false")) +
-					",\"node_id\":\"" + Node->ID + "\"}}";
+			UDevice* Device = Devices[i];
+			FString NodeBodyString = "{\"id\":" + FString::FromInt(Device->ID) +
+					",\"name\":\"" + Device->Name + "\",\"custom_fields\":{\"info\":\"" +
+					Device->Info + "\",\"mtu\":" + FString::FromInt(Device->MTU)
+					+ ",\"primary\":" + (Device->Primary ? FString("true") : FString("false")) +
+					",\"node_ids\":\"" + UDevice::NodeIDsToString(Device->NodeIDs) + "\"}}";
 
 			RequestBodyString += NodeBodyString;
 
-			if (i < Nodes.Num() - 1)
+			if (i < Devices.Num() - 1)
 			{
 				RequestBodyString += ",";
 			}
@@ -296,7 +293,7 @@ void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void UReztly::RequestNetboxSitePatch(FSite Site, FString NetboxUrl, FString NetboxToken,
+void UReztly::RequestNetboxSitePatch(USite* Site, FString NetboxUrl, FString NetboxToken,
 								 FResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
@@ -319,9 +316,9 @@ void UReztly::RequestNetboxSitePatch(FSite Site, FString NetboxUrl, FString Netb
 		FString AuthorizationValue = "Token " + NetboxToken;
 		Request->SetHeader("Authorization", AuthorizationValue);
 
-		FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site.Id) + ",\"latitude\":" +
-			    FString::SanitizeFloat(Site.Latitude) + ",\"longitude\":" +
-			    FString::SanitizeFloat(Site.Longitude) + "}]";
+		FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site->ID) + ",\"latitude\":" +
+			    FString::SanitizeFloat(Site->Latitude) + ",\"longitude\":" +
+			    FString::SanitizeFloat(Site->Longitude) + "}]";
 		
 		Request->SetContentAsString(RequestBodyString);
 

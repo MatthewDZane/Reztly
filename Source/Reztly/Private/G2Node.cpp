@@ -23,6 +23,5 @@ UG2Node::UG2Node(FString IDIn, FString InfoIn, FString NameIn, FString IPIn,
 }
 
 UG2Node::~UG2Node() {
-	Latitude = 0;
-	Longitude = 0;
+
 }

@@ -20,7 +20,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FSite
+struct FSiteStruct
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -95,5 +95,5 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool Previous;
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FSite> Results;
+	TArray<FSiteStruct> Results;
 };
