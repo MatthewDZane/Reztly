@@ -65,7 +65,7 @@ public:
 									FResponseDelegate OnNetboxDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxSitePatch(USite* Site, FString NetboxUrl, FString NetboxToken,
+		static void RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
 								   FResponseDelegate OnNetboxPatchResponse);
 						    
 };

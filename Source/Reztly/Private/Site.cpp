@@ -21,3 +21,17 @@ USite::~USite()
 {
 	
 }
+
+FSiteStruct USite::ToStruct()
+{
+	FSiteStruct Site;
+	Site.Id = ID;
+	Site.Url = Url;
+	Site.Display = Display;
+	Site.Name = Name;
+	Site.Slug = Slug;
+	Site.Latitude = Latitude;
+	Site.Longitude = Longitude;
+
+	return Site;
+}

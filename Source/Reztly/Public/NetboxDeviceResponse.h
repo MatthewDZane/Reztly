@@ -77,13 +77,6 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FAssetTag
-{
-	GENERATED_USTRUCT_BODY()
-public:
-};
-
-USTRUCT(BlueprintType)
 struct FDeviceSite
 {
 	GENERATED_USTRUCT_BODY()
@@ -314,7 +307,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FString Serial;
 	UPROPERTY(BlueprintReadWrite)
-	FAssetTag Asset_Tag;
+	FString Asset_Tag;
 	UPROPERTY(BlueprintReadWrite)
 	FDeviceSite Site;
 	UPROPERTY(BlueprintReadWrite)

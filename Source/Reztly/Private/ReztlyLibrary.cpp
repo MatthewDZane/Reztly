@@ -293,7 +293,7 @@ void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void UReztly::RequestNetboxSitePatch(USite* Site, FString NetboxUrl, FString NetboxToken,
+void UReztly::RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
 								 FResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
@@ -316,9 +316,9 @@ void UReztly::RequestNetboxSitePatch(USite* Site, FString NetboxUrl, FString Net
 		FString AuthorizationValue = "Token " + NetboxToken;
 		Request->SetHeader("Authorization", AuthorizationValue);
 
-		FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site->ID) + ",\"latitude\":" +
-			    FString::SanitizeFloat(Site->Latitude) + ",\"longitude\":" +
-			    FString::SanitizeFloat(Site->Longitude) + "}]";
+		FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site.Id) + ",\"latitude\":" +
+			    FString::SanitizeFloat(Site.Latitude) + ",\"longitude\":" +
+			    FString::SanitizeFloat(Site.Longitude) + "}]";
 		
 		Request->SetContentAsString(RequestBodyString);
 

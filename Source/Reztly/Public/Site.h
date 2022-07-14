@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "NetboxSiteResponse.h"
+
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Site.generated.h"
@@ -35,4 +37,6 @@ public:
 	float Latitude;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Longitude;
+
+	FSiteStruct ToStruct();
 };
