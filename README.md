@@ -3,7 +3,6 @@
 * Provides C++ function libraries, which are exposed to Blueprints to handle the G2 API, UE4, and Netbox interactions.
 * Contains C++ structs to handle responses and store the data.
 
-
 # Table of Contents
 - [Installation](#installation)
 - [How to use](#how-to-use)
