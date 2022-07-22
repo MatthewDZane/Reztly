@@ -71,6 +71,13 @@ public:
 };
 
 USTRUCT(BlueprintType)
+struct FQOSClasses
+{
+	GENERATED_USTRUCT_BODY()
+public:
+};
+
+USTRUCT(BlueprintType)
 struct FImpact
 {
 	GENERATED_USTRUCT_BODY()
@@ -111,6 +118,8 @@ public:
 	int Num_bytes;
 	UPROPERTY(BlueprintReadWrite)
 	int Num_flows;
+	UPROPERTY(BlueprintReadWrite)
+	FQOSClasses Qos_class;
 	UPROPERTY(BlueprintReadWrite)
 	FString Start;
 	UPROPERTY(BlueprintReadWrite)
@@ -196,9 +205,9 @@ struct FSnapshot
 	GENERATED_USTRUCT_BODY()
 public:
 	UPROPERTY(BlueprintReadWrite)
-	FBPG bpg;
+	FBPG Bpg;
 	UPROPERTY(BlueprintReadWrite)
-	FFGG fgg;
+	FFGG Fgg;
 	UPROPERTY(BlueprintReadWrite)
 	FFlows Flows;
 	UPROPERTY(BlueprintReadWrite)
@@ -207,6 +216,8 @@ public:
 	FImpact Impact;
 	UPROPERTY(BlueprintReadWrite)
 	int Parent_id;
+	UPROPERTY(BlueprintReadWrite)
+	FQOSClasses Qos_classes;
 	UPROPERTY(BlueprintReadWrite)
 	FTopo Topo;
 };

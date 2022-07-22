@@ -2,6 +2,24 @@
 
 #include "NetboxResponse.generated.h"
 
+USTRUCT(BlueprintType)
+struct FTag
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	int Id;
+	UPROPERTY(BlueprintReadWrite)
+	FString Url;
+	UPROPERTY(BlueprintReadWrite)
+	FString Display;
+	UPROPERTY(BlueprintReadWrite)
+	FString Name;
+	UPROPERTY(BlueprintReadWrite)
+	FString Slug;
+	UPROPERTY(BlueprintReadWrite)
+	FString Color;
+};
 
 USTRUCT(BlueprintType)
 struct FTenant

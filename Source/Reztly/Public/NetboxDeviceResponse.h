@@ -244,14 +244,6 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FTag
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	
-};
-
-USTRUCT(BlueprintType)
 struct FCustomDeviceFields
 {
 	GENERATED_USTRUCT_BODY()

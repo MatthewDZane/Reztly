@@ -61,7 +61,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FString> Asns;
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FString> Tags;
+	TArray<FTag> Tags;
 	UPROPERTY(BlueprintReadWrite)
 	FCustomSiteFields Custom_fields;
 	UPROPERTY(BlueprintReadWrite)

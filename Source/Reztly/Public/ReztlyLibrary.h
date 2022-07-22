@@ -24,8 +24,9 @@ class REZTLY_API UReztly : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 	
 public:
-	static const int TBD_DEVICE_TYPE_ID = 83;
-	static const int TBD_SITE_ID = 67;
+	static const int TBD_DEVICE_TYPE_ID = 85;
+	static const int TBD_DEVICE_ROLE = 29;
+	static const int TBD_SITE_ID = 62;
 	
 	UFUNCTION(BlueprintCallable)
 		static void RequestBearerToken(FString G2Username, FString G2Password,

@@ -36,7 +36,7 @@ void UReztly::RequestBearerToken(FString G2Username, FString G2Password,
 
 		Request->SetContentAsString(RequestBodyString);
 
-		UE_LOG(LogTemp, Warning, TEXT("POST %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("POST %s"), *Request->GetURL());
 
 		Request->ProcessRequest();
 	});
@@ -65,7 +65,7 @@ void UReztly::RequestSnapshotRange(FString G2APIUrl, FString G2BearerToken,
 		Request->SetHeader("Content-Type", "application/json");
 		Request->SetHeader("Authorization", "Bearer " + G2BearerToken);
 
-		UE_LOG(LogTemp, Warning, TEXT("GET %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
 
 		Request->ProcessRequest();
 	});
@@ -94,7 +94,7 @@ void UReztly::RequestSnapshot(int SnapshotID, FString G2APIUrl,
 		Request->SetHeader("Content-Type", "application/json");
 		Request->SetHeader("Authorization", "Bearer " + G2BearerToken);
 
-		UE_LOG(LogTemp, Warning, TEXT("GET %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
 
 		Request->ProcessRequest();
 	});
@@ -120,7 +120,7 @@ void UReztly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl,
 		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
 		Request->SetHeader("Content-Type", "application/json");
 
-		UE_LOG(LogTemp, Warning, TEXT("GET %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
 
 		Request->ProcessRequest();
 	});
@@ -150,7 +150,7 @@ void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
 		FString AuthorizationValue = "Token " + NetboxToken;
 		Request->SetHeader("Authorization", AuthorizationValue);
 		
-		UE_LOG(LogTemp, Warning, TEXT("GET %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
 
 		Request->ProcessRequest();
 	});
@@ -184,13 +184,13 @@ void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> Nodes,
 		FString RequestBodyString = "[";
 		for (int i = 0; i < Nodes.Num(); i++) {
 			UG2Node* Node = Nodes[i];
-			FString NodeBodyString =  "{\"name\":\"" + Node->Name + "\"device_type\":" +
-				FString::FromInt(TBD_DEVICE_TYPE_ID) + ",\"site\":" +
-				FString::FromInt(TBD_SITE_ID) + ",\"custom_fields\":{\"node_id\":\"" +
-				Node->ID + "\",\"info\":\"" + Node->Info + "\",\"mtu\":" +
+			FString NodeBodyString =  "{\"name\":\"" + Node->Name + "\",\"device_type\":" +
+				FString::FromInt(TBD_DEVICE_TYPE_ID) + ",\"device_role\":" +
+				FString::FromInt(TBD_DEVICE_ROLE) + ",\"site\":" +
+				FString::FromInt(TBD_SITE_ID) + ",\"custom_fields\":{\"info\":\"" + Node->Info + "\",\"mtu\":" +
 				FString::FromInt(Node->MTU) + ",\"primary\":" +
 				(Node->Primary ? FString("true") : FString("false")) +
-				",\"g2_node_id\":\"" + Node->ID + "\"}}";
+				",\"node_ids\":\"" + Node->ID + "\"}}";
 
 			RequestBodyString += NodeBodyString;
 
@@ -203,8 +203,8 @@ void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> Nodes,
 		
 		Request->SetContentAsString(RequestBodyString);
 
-		UE_LOG(LogTemp, Warning, TEXT("POST %s"), *Request->GetURL());
-		UE_LOG(LogTemp, Warning, TEXT("POST %s"), *RequestBodyString);
+		UE_LOG(LogTemp, Log, TEXT("POST %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("POST %s"), *RequestBodyString);
 		
 		Request->ProcessRequest();
 	});
@@ -256,8 +256,8 @@ void UReztly::RequestNetboxDevicesPatch(TArray<UDevice*> Devices,
 	
 		Request->SetContentAsString(RequestBodyString);
 
-		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *Request->GetURL());
-		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *RequestBodyString);
+		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
 
 		Request->ProcessRequest();
 	});
@@ -287,7 +287,7 @@ void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
 		FString AuthorizationValue = "Token " + NetboxToken;
 		Request->SetHeader("Authorization", AuthorizationValue);
 		
-		UE_LOG(LogTemp, Warning, TEXT("GET %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
 
 		Request->ProcessRequest();
 	});
@@ -322,8 +322,8 @@ void UReztly::RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FStrin
 		
 		Request->SetContentAsString(RequestBodyString);
 
-		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *Request->GetURL());
-		UE_LOG(LogTemp, Warning, TEXT("PATCH %s"), *RequestBodyString);
+		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
+		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
 		
 		Request->ProcessRequest();
 	});
