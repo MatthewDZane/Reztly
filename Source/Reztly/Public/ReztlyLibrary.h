@@ -52,7 +52,7 @@ public:
                                       FResponseDelegate OnNetboxDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesPost(TArray<UG2Node*> Nodes, FString NetboxUrl,
+		static void RequestNetboxDevicesPost(TArray<UDevice*> Devices, FString NetboxUrl,
 									  FString NetboxToken, 
 							          FResponseDelegate OnNetboxPostResponse);
 

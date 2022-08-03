@@ -156,58 +156,57 @@ void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void UReztly::RequestNetboxDevicesPost(TArray<UG2Node*> Nodes,
+void UReztly::RequestNetboxDevicesPost(TArray<UDevice*> Devices,
 						        FString NetboxUrl, FString NetboxToken, 
 					            FResponseDelegate OnNetboxPostResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[Nodes, NetboxUrl, NetboxToken,	OnNetboxPostResponse] ()
-	{
-		UReztlyResponse* NetboxDevicesPostResponse = NewObject<UReztlyResponse>();
-		NetboxDevicesPostResponse->SetDelegate(OnNetboxPostResponse);
+		[Devices, NetboxUrl, NetboxToken, OnNetboxPostResponse]()
+		{
+			UReztlyResponse* NetboxDevicesPostResponse = NewObject<UReztlyResponse>();
+			NetboxDevicesPostResponse->SetDelegate(OnNetboxPostResponse);
 
-		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
-		
-		Request->OnProcessRequestComplete().BindUObject(
-			NetboxDevicesPostResponse, &UReztlyResponse::OnResponse);
-		
-		Request->SetURL(NetboxUrl + "dcim/devices");
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
-		Request->SetVerb("POST");
-		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
-		Request->SetHeader("Content-Type", "application/json");
-		
-		FString AuthorizationValue = "Token " + NetboxToken;
-		Request->SetHeader("Authorization", AuthorizationValue);
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxDevicesPostResponse, &UReztlyResponse::OnResponse);
 
-			
-		FString RequestBodyString = "[";
-		for (int i = 0; i < Nodes.Num(); i++) {
-			UG2Node* Node = Nodes[i];
-			FString NodeBodyString =  "{\"name\":\"" + Node->Name + "\",\"device_type\":" +
-				FString::FromInt(TBD_DEVICE_TYPE_ID) + ",\"device_role\":" +
-				FString::FromInt(TBD_DEVICE_ROLE) + ",\"site\":" +
-				FString::FromInt(TBD_SITE_ID) + ",\"custom_fields\":{\"info\":\"" + Node->Info + "\",\"mtu\":" +
-				FString::FromInt(Node->MTU) + ",\"primary\":" +
-				(Node->Primary ? FString("true") : FString("false")) +
-				",\"node_ids\":\"" + Node->ID + "\"}}";
+			Request->SetURL(NetboxUrl + "/dcim/devices/");
 
-			RequestBodyString += NodeBodyString;
+			Request->SetVerb("POST");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
 
-			if (i < Nodes.Num() - 1)
-			{
-				RequestBodyString += ",";
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			FString RequestBodyString = "[";
+			for (int i = 0; i < Devices.Num(); i++) {
+				UDevice* Device = Devices[i];
+				FString NodeBodyString = "{\"name\":\"" + Device->Name + "\",\"device_type\":" +
+					FString::FromInt(TBD_DEVICE_TYPE_ID) + ",\"device_role\":" +
+					FString::FromInt(TBD_DEVICE_ROLE) + ",\"site\":" +
+					FString::FromInt(TBD_SITE_ID) + ",\"custom_fields\":{\"info\":\"" + Device->Info + "\",\"mtu\":" +
+					FString::FromInt(Device->MTU) + ",\"primary\":" +
+					(Device->Primary ? FString("true") : FString("false")) +
+					",\"node_ids\":\"" + UDevice::NodeIDsToString(Device->NodeIDs) + "\"}}";
+
+				RequestBodyString += NodeBodyString;
+
+				if (i < Devices.Num() - 1)
+				{
+					RequestBodyString += ",";
+				}
 			}
-		}
-		RequestBodyString += "]";
-		
-		Request->SetContentAsString(RequestBodyString);
+			RequestBodyString += "]";
 
-		UE_LOG(LogTemp, Log, TEXT("POST %s"), *Request->GetURL());
-		UE_LOG(LogTemp, Log, TEXT("POST %s"), *RequestBodyString);
-		
-		Request->ProcessRequest();
-	});
+			Request->SetContentAsString(RequestBodyString);
+
+			UE_LOG(LogTemp, Log, TEXT("POST %s"), *Request->GetURL());
+			UE_LOG(LogTemp, Log, TEXT("POST %s"), *RequestBodyString);
+
+			Request->ProcessRequest();
+		});
 }
 
 void UReztly::RequestNetboxDevicesPatch(TArray<UDevice*> Devices,

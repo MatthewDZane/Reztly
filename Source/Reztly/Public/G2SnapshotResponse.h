@@ -175,7 +175,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	int Fairshare;
 	UPROPERTY(BlueprintReadWrite)
-	float Gradient;
+	FString Gradient;
 	UPROPERTY(BlueprintReadWrite)
 	FString ID;
 	UPROPERTY(BlueprintReadWrite)
