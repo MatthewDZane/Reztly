@@ -14,9 +14,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FString Info;
 	UPROPERTY(BlueprintReadWrite)
-	float Lat;
+	FString Lat;
 	UPROPERTY(BlueprintReadWrite)
-	float Lng;
+	FString Lng;
 	UPROPERTY(BlueprintReadWrite)
 	FString Name;
 };

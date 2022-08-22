@@ -26,7 +26,6 @@ class REZTLY_API UReztly : public UBlueprintFunctionLibrary
 public:
 	static const int TBD_DEVICE_TYPE_ID = 85;
 	static const int TBD_DEVICE_ROLE = 29;
-	static const int TBD_SITE_ID = 62;
 	
 	UFUNCTION(BlueprintCallable)
 		static void RequestBearerToken(FString G2Username, FString G2Password,
@@ -52,12 +51,12 @@ public:
                                       FResponseDelegate OnNetboxDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesPost(TArray<UDevice*> Devices, FString NetboxUrl,
+		static void RequestNetboxDevicesPost(TArray<FDeviceStruct> Devices, FString NetboxUrl,
 									  FString NetboxToken, 
 							          FResponseDelegate OnNetboxPostResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesPatch(TArray<UDevice*> Devices,
+		static void RequestNetboxDevicesPatch(TArray<FDeviceStruct> Devices,
 									   FString NetboxUrl, FString NetboxToken,
 							           FResponseDelegate OnNetboxPatchResponse);
 

@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "NetboxDeviceResponse.h"
+
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 
@@ -42,6 +44,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USite* Site;
+
+	FDeviceStruct ToStruct();
 
 	static FString NodeIDsToString(TArray<FString> NodeIDsIn);
 };

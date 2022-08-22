@@ -126,6 +126,72 @@ void UReztly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl,
 	});
 }
 
+void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
+	FResponseDelegate OnNetboxDataResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[NetboxUrl, NetboxToken, OnNetboxDataResponse]()
+		{
+			UReztlyResponse* NetboxSitesGetResponse = NewObject<UReztlyResponse>();
+			NetboxSitesGetResponse->SetDelegate(OnNetboxDataResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxSitesGetResponse, &UReztlyResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/sites/?limit=0&offset=0";
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
+	FResponseDelegate OnNetboxPatchResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Site, NetboxUrl, NetboxToken, OnNetboxPatchResponse]()
+		{
+			UReztlyResponse* NetboxDevicesPatchResponse = NewObject<UReztlyResponse>();
+			NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxDevicesPatchResponse, &UReztlyResponse::OnResponse);
+
+			Request->SetURL(NetboxUrl + "/dcim/sites/");
+
+			Request->SetVerb("PATCH");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site.Id) + ",\"latitude\":" +
+				FString::SanitizeFloat(Site.Latitude) + ",\"longitude\":" +
+				FString::SanitizeFloat(Site.Longitude) + "}]";
+
+			Request->SetContentAsString(RequestBodyString);
+
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
+
+			Request->ProcessRequest();
+		});
+}
+
 void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
 					            FResponseDelegate OnNetboxDataResponse)
 {
@@ -156,7 +222,7 @@ void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void UReztly::RequestNetboxDevicesPost(TArray<UDevice*> Devices,
+void UReztly::RequestNetboxDevicesPost(TArray<FDeviceStruct> Devices,
 						        FString NetboxUrl, FString NetboxToken, 
 					            FResponseDelegate OnNetboxPostResponse)
 {
@@ -182,14 +248,18 @@ void UReztly::RequestNetboxDevicesPost(TArray<UDevice*> Devices,
 
 			FString RequestBodyString = "[";
 			for (int i = 0; i < Devices.Num(); i++) {
-				UDevice* Device = Devices[i];
-				FString NodeBodyString = "{\"name\":\"" + Device->Name + "\",\"device_type\":" +
-					FString::FromInt(TBD_DEVICE_TYPE_ID) + ",\"device_role\":" +
-					FString::FromInt(TBD_DEVICE_ROLE) + ",\"site\":" +
-					FString::FromInt(TBD_SITE_ID) + ",\"custom_fields\":{\"info\":\"" + Device->Info + "\",\"mtu\":" +
-					FString::FromInt(Device->MTU) + ",\"primary\":" +
-					(Device->Primary ? FString("true") : FString("false")) +
-					",\"node_ids\":\"" + UDevice::NodeIDsToString(Device->NodeIDs) + "\"}}";
+				FDeviceStruct Device = Devices[i];
+				FString NodeBodyString = 
+					"{\"name\":\"" + Device.Name + 
+					"\",\"device_type\":" + FString::FromInt(TBD_DEVICE_TYPE_ID) + 
+					",\"device_role\":" + FString::FromInt(TBD_DEVICE_ROLE) + 
+					",\"site\":" + FString::FromInt(Device.Site.Id) +
+					",\"custom_fields\":{" + 
+						"\"info\":\"" + Device.Custom_fields.Info + 
+						"\",\"mtu\":" + FString::FromInt(Device.Custom_fields.Mtu) + 
+						",\"primary\":" + (Device.Custom_fields.Primary ? "true" : "false") +
+						",\"node_ids\":\"" + Device.Custom_fields.Node_ids + 
+					"\"}}";
 
 				RequestBodyString += NodeBodyString;
 
@@ -209,7 +279,7 @@ void UReztly::RequestNetboxDevicesPost(TArray<UDevice*> Devices,
 		});
 }
 
-void UReztly::RequestNetboxDevicesPatch(TArray<UDevice*> Devices,
+void UReztly::RequestNetboxDevicesPatch(TArray<FDeviceStruct> Devices,
 								 FString NetboxUrl, FString NetboxToken,
 								 FResponseDelegate OnNetboxPatchResponse)
 {
@@ -237,12 +307,16 @@ void UReztly::RequestNetboxDevicesPatch(TArray<UDevice*> Devices,
 
 		for (int i = 0; i < Devices.Num(); i++)
 		{
-			UDevice* Device = Devices[i];
-			FString NodeBodyString = "{\"id\":" + FString::FromInt(Device->ID) +
-					",\"name\":\"" + Device->Name + "\",\"custom_fields\":{\"info\":\"" +
-					Device->Info + "\",\"mtu\":" + FString::FromInt(Device->MTU)
-					+ ",\"primary\":" + (Device->Primary ? FString("true") : FString("false")) +
-					",\"node_ids\":\"" + UDevice::NodeIDsToString(Device->NodeIDs) + "\"}}";
+			FDeviceStruct Device = Devices[i];
+			FString NodeBodyString = 
+				"{\"id\":" + FString::FromInt(Device.Id) +
+				",\"name\":\"" + Device.Name + 
+				"\",\"custom_fields\":{" +
+					"\"info\":\"" + Device.Custom_fields.Info + 
+					"\",\"mtu\":" + FString::FromInt(Device.Custom_fields.Mtu) + 
+					",\"primary\":" + (Device.Custom_fields.Primary ? "true" : "false") +
+					",\"node_ids\":\"" + Device.Custom_fields.Node_ids + 
+				"\"}}";
 
 			RequestBodyString += NodeBodyString;
 
@@ -258,72 +332,6 @@ void UReztly::RequestNetboxDevicesPatch(TArray<UDevice*> Devices,
 		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
 		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
 
-		Request->ProcessRequest();
-	});
-}
-
-void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
-								FResponseDelegate OnNetboxDataResponse)
-{
-	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[NetboxUrl, NetboxToken, OnNetboxDataResponse] ()
-	{
-		UReztlyResponse* NetboxSitesGetResponse = NewObject<UReztlyResponse>();
-		NetboxSitesGetResponse->SetDelegate(OnNetboxDataResponse);
-
-		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
-		
-		Request->OnProcessRequestComplete().BindUObject(
-			NetboxSitesGetResponse, &UReztlyResponse::OnResponse);
-
-		FString URL = NetboxUrl + "/dcim/sites/?limit=0&offset=0";
-		Request->SetURL(URL);
-
-		Request->SetVerb("GET");
-		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
-		Request->SetHeader("Content-Type", "application/json");
-		
-		FString AuthorizationValue = "Token " + NetboxToken;
-		Request->SetHeader("Authorization", AuthorizationValue);
-		
-		UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
-
-		Request->ProcessRequest();
-	});
-}
-
-void UReztly::RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
-								 FResponseDelegate OnNetboxPatchResponse)
-{
-	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[Site, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
-	{
-		UReztlyResponse* NetboxDevicesPatchResponse = NewObject<UReztlyResponse>();
-		NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
-
-		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
-		
-		Request->OnProcessRequestComplete().BindUObject(
-			NetboxDevicesPatchResponse, &UReztlyResponse::OnResponse);
-		
-		Request->SetURL(NetboxUrl + "/dcim/sites/");
-
-		Request->SetVerb("PATCH");
-		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
-		Request->SetHeader("Content-Type", "application/json");
-		
-		FString AuthorizationValue = "Token " + NetboxToken;
-		Request->SetHeader("Authorization", AuthorizationValue);
-
-		FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site.Id) + ",\"latitude\":" +
-			    FString::SanitizeFloat(Site.Latitude) + ",\"longitude\":" +
-			    FString::SanitizeFloat(Site.Longitude) + "}]";
-		
-		Request->SetContentAsString(RequestBodyString);
-
-		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
-		UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
-		
 		Request->ProcessRequest();
 	});
 }
