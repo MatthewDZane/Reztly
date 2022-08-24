@@ -45,7 +45,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USite* Site;
 
+	UFUNCTION(BlueprintCallable)
 	FDeviceStruct ToStruct();
-
-	static FString NodeIDsToString(TArray<FString> NodeIDsIn);
 };

@@ -249,8 +249,6 @@ struct FCustomDeviceFields
 	GENERATED_USTRUCT_BODY()
 public:
 	UPROPERTY(BlueprintReadWrite)
-	FString Node_ids;
-	UPROPERTY(BlueprintReadWrite)
 	FString Info;
 	UPROPERTY(BlueprintReadWrite)
 	int Mtu;

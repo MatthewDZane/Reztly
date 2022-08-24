@@ -258,7 +258,6 @@ void UReztly::RequestNetboxDevicesPost(TArray<FDeviceStruct> Devices,
 						"\"info\":\"" + Device.Custom_fields.Info + 
 						"\",\"mtu\":" + FString::FromInt(Device.Custom_fields.Mtu) + 
 						",\"primary\":" + (Device.Custom_fields.Primary ? "true" : "false") +
-						",\"node_ids\":\"" + Device.Custom_fields.Node_ids + 
 					"\"}}";
 
 				RequestBodyString += NodeBodyString;
@@ -315,7 +314,6 @@ void UReztly::RequestNetboxDevicesPatch(TArray<FDeviceStruct> Devices,
 					"\"info\":\"" + Device.Custom_fields.Info + 
 					"\",\"mtu\":" + FString::FromInt(Device.Custom_fields.Mtu) + 
 					",\"primary\":" + (Device.Custom_fields.Primary ? "true" : "false") +
-					",\"node_ids\":\"" + Device.Custom_fields.Node_ids + 
 				"\"}}";
 
 			RequestBodyString += NodeBodyString;
