@@ -238,9 +238,9 @@ FJsonObjectWrapper UJsonParser::StructToUE4ResponseObject(FUE4Response Response)
 	return JsonWrapper;
 }
 
-FNetboxDeviceResponse UJsonParser::StringToNetboxDeviceResponse(FString JsonString)
+FNetboxRegionResponse UJsonParser::StringToNetboxRegionResponse(FString JsonString)
 {
-	FNetboxDeviceResponse Response;
+	FNetboxRegionResponse Response;
 	if (FJsonObjectConverter::JsonObjectStringToUStruct(JsonString, &Response))
 	{
 		return Response;
@@ -248,15 +248,15 @@ FNetboxDeviceResponse UJsonParser::StringToNetboxDeviceResponse(FString JsonStri
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Error: could not parse string"));
-		return FNetboxDeviceResponse();
+		return FNetboxRegionResponse();
 	}
 }
 
-FJsonObjectWrapper UJsonParser::StructToNetboxDeviceResponseObject(FNetboxDeviceResponse Response)
+FJsonObjectWrapper UJsonParser::StructToNetboxRegionResponseObject(FNetboxRegionResponse Response)
 {
 	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
 	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
-										<FNetboxDeviceResponse>(Response);
+		<FNetboxRegionResponse>(Response);
 	return JsonWrapper;
 }
 
@@ -278,7 +278,29 @@ FJsonObjectWrapper UJsonParser::StructToNetboxSiteResponseObject(FNetboxSiteResp
 {
 	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
 	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
-										<FNetboxSiteResponse>(Response);
+		<FNetboxSiteResponse>(Response);
+	return JsonWrapper;
+}
+
+FNetboxDeviceResponse UJsonParser::StringToNetboxDeviceResponse(FString JsonString)
+{
+	FNetboxDeviceResponse Response;
+	if (FJsonObjectConverter::JsonObjectStringToUStruct(JsonString, &Response))
+	{
+		return Response;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Error: could not parse string"));
+		return FNetboxDeviceResponse();
+	}
+}
+
+FJsonObjectWrapper UJsonParser::StructToNetboxDeviceResponseObject(FNetboxDeviceResponse Response)
+{
+	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
+	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
+										<FNetboxDeviceResponse>(Response);
 	return JsonWrapper;
 }
 

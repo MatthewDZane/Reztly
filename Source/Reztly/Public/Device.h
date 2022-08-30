@@ -38,8 +38,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int MTU;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<FString> NodeIDs;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool Primary;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

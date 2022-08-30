@@ -11,8 +11,10 @@
 #include <queue>
 #include "CoreMinimal.h"
 #include "JsonObjectWrapper.h"
-#include "NetboxDeviceResponse.h"
+#include "NetboxRegionResponse.h"
 #include "NetboxSiteResponse.h"
+#include "NetboxDeviceResponse.h"
+
 #include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "JsonObjectConverter.h"
@@ -91,6 +93,20 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable)
 	static FJsonObjectWrapper StructToNetboxDeviceResponseObject(FNetboxDeviceResponse Response);
+
+
+	// Netbox Region Response Functions //
+	/**
+	* Converts a Netbox Region Response FString to a FNetboxRegionResponse struct
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FNetboxRegionResponse StringToNetboxRegionResponse(FString JsonString);
+
+	/**
+	* Converts a FNetboxRegionResponse to a FJsonObjectWrapper
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FJsonObjectWrapper StructToNetboxRegionResponseObject(FNetboxRegionResponse Response);
 
 
 	// Netbox Site Response Functions //

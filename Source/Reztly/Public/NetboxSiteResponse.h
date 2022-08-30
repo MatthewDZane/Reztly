@@ -20,6 +20,25 @@ public:
 };
 
 USTRUCT(BlueprintType)
+struct FSiteRegion
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+		FString Id;
+	UPROPERTY(BlueprintReadWrite)
+		FString Url;
+	UPROPERTY(BlueprintReadWrite)
+		FString Display;
+	UPROPERTY(BlueprintReadWrite)
+		FString Name;
+	UPROPERTY(BlueprintReadWrite)
+		FString Slug;
+	UPROPERTY(BlueprintReadWrite)
+		int _depth;
+};
+
+USTRUCT(BlueprintType)
 struct FSiteStruct
 {
 	GENERATED_USTRUCT_BODY()
@@ -37,7 +56,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FNetboxStatus Status;
 	UPROPERTY(BlueprintReadWrite)
-	FRegion Region;
+	FSiteRegion Region;
 	UPROPERTY(BlueprintReadWrite)
 	FGroup Group;
 	UPROPERTY(BlueprintReadWrite)

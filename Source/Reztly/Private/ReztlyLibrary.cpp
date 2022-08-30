@@ -3,15 +3,15 @@
 
 #include "ReztlyLibrary.h"
 
-void UReztly::RequestBearerToken(FString G2Username, FString G2Password,
-                                 FString G2APIUrl,
-                                 FResponseDelegate OnBearerTokenResponseDelegate)
+void UReztly::RequestBearerToken(
+	FString G2Username, FString G2Password, FString G2APIUrl,
+    FStringResponseDelegate OnBearerTokenResponseDelegate)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[G2Username, G2Password,
 		G2APIUrl, OnBearerTokenResponseDelegate] ()
 	{
-		UReztlyResponse* BearerTokenResponse = NewObject<UReztlyResponse>();
+		UReztlyFStringResponse* BearerTokenResponse = NewObject<UReztlyFStringResponse>();
 		BearerTokenResponse->SetDelegate(OnBearerTokenResponseDelegate);
 		
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
@@ -23,7 +23,7 @@ void UReztly::RequestBearerToken(FString G2Username, FString G2Password,
 		Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
 		Request->SetHeader("Content-Type", "application/json");
 		Request->OnProcessRequestComplete().BindUObject(BearerTokenResponse,
-												&UReztlyResponse::OnResponse);
+												&UReztlyFStringResponse::OnResponse);
 
 		TSharedPtr<FJsonObject> RequestBody = MakeShareable(new FJsonObject);
 		RequestBody->SetStringField("username", G2Username);
@@ -42,20 +42,21 @@ void UReztly::RequestBearerToken(FString G2Username, FString G2Password,
 	});
 }
 
-void UReztly::RequestSnapshotRange(FString G2APIUrl, FString G2BearerToken,
-								   FResponseDelegate OnSnapshotRangeResponse)
+void UReztly::RequestSnapshotRange(
+	FString G2APIUrl, FString G2BearerToken,
+	FStringResponseDelegate OnSnapshotRangeResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[G2APIUrl, G2BearerToken, OnSnapshotRangeResponse] ()
 	{
-		UReztlyResponse* SnapshotRangeResponse = NewObject<UReztlyResponse>();
+		UReztlyFStringResponse* SnapshotRangeResponse = NewObject<UReztlyFStringResponse>();
 		SnapshotRangeResponse->SetDelegate(OnSnapshotRangeResponse);
 			
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 		Request->OnProcessRequestComplete().BindUObject(
 			SnapshotRangeResponse,
-			&UReztlyResponse::OnResponse);
+			&UReztlyFStringResponse::OnResponse);
 
 		FString G2SnapshotRangeURL = G2APIUrl + "api/tsrange/-1/0";
 		Request->SetURL(G2SnapshotRangeURL);
@@ -71,20 +72,20 @@ void UReztly::RequestSnapshotRange(FString G2APIUrl, FString G2BearerToken,
 	});
 }
 
-void UReztly::RequestSnapshot(int SnapshotID, FString G2APIUrl, 
-							  FString G2BearerToken,
-							  FResponseDelegate OnSnapshotResponse)
+void UReztly::RequestSnapshot(
+	int SnapshotID, FString G2APIUrl, FString G2BearerToken,
+	FStringResponseDelegate OnSnapshotResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[SnapshotID, G2APIUrl, G2BearerToken, OnSnapshotResponse] ()
 	{
-		UReztlyResponse* SnapshotResponse = NewObject<UReztlyResponse>();
+		UReztlyFStringResponse* SnapshotResponse = NewObject<UReztlyFStringResponse>();
 		SnapshotResponse->SetDelegate(OnSnapshotResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 		Request->OnProcessRequestComplete().BindUObject(
-			SnapshotResponse, &UReztlyResponse::OnResponse);
+			SnapshotResponse, &UReztlyFStringResponse::OnResponse);
 
 		FString SnapshotRequestURL = G2APIUrl + "api/snapshot?id=" + FString::FromInt(SnapshotID);
 		Request->SetURL(SnapshotRequestURL);
@@ -100,19 +101,20 @@ void UReztly::RequestSnapshot(int SnapshotID, FString G2APIUrl,
 	});
 }
 
-void UReztly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl, 
-							         FResponseDelegate OnUE4NautilusDataResponse)
+void UReztly::RequestUE4NautilusData(
+	FString UE4NautilusDataUtilsUrl, 
+	FStringResponseDelegate OnUE4NautilusDataResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[UE4NautilusDataUtilsUrl, OnUE4NautilusDataResponse] ()
 	{
-		UReztlyResponse* UE4NautilusDataResponse = NewObject<UReztlyResponse>();
+		UReztlyFStringResponse* UE4NautilusDataResponse = NewObject<UReztlyFStringResponse>();
 		UE4NautilusDataResponse->SetDelegate(OnUE4NautilusDataResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			UE4NautilusDataResponse, &UReztlyResponse::OnResponse);
+			UE4NautilusDataResponse, &UReztlyFStringResponse::OnResponse);
 
 		Request->SetURL(UE4NautilusDataUtilsUrl);
 
@@ -126,19 +128,51 @@ void UReztly::RequestUE4NautilusData(FString UE4NautilusDataUtilsUrl,
 	});
 }
 
-void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
-	FResponseDelegate OnNetboxDataResponse)
+void UReztly::RequestNetboxRegionsGet(
+	FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxRegionsResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[NetboxUrl, NetboxToken, OnNetboxDataResponse]()
+		[NetboxUrl, NetboxToken, OnNetboxRegionsResponse]()
 		{
-			UReztlyResponse* NetboxSitesGetResponse = NewObject<UReztlyResponse>();
-			NetboxSitesGetResponse->SetDelegate(OnNetboxDataResponse);
+			UReztlyFStringResponse* NetboxRegionsGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxRegionsGetResponse->SetDelegate(OnNetboxRegionsResponse);
 
 			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 			Request->OnProcessRequestComplete().BindUObject(
-				NetboxSitesGetResponse, &UReztlyResponse::OnResponse);
+				NetboxRegionsGetResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/regions/?limit=0&offset=0";
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxSitesGet(
+	FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxSitesGetResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[NetboxUrl, NetboxToken, OnNetboxSitesGetResponse]()
+		{
+			UReztlyFStringResponse* NetboxSitesGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxSitesGetResponse->SetDelegate(OnNetboxSitesGetResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxSitesGetResponse, &UReztlyFStringResponse::OnResponse);
 
 			FString URL = NetboxUrl + "/dcim/sites/?limit=0&offset=0";
 			Request->SetURL(URL);
@@ -156,19 +190,20 @@ void UReztly::RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
 		});
 }
 
-void UReztly::RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
-	FResponseDelegate OnNetboxPatchResponse)
+void UReztly::RequestNetboxSitePatch(
+	FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[Site, NetboxUrl, NetboxToken, OnNetboxPatchResponse]()
 		{
-			UReztlyResponse* NetboxDevicesPatchResponse = NewObject<UReztlyResponse>();
+			UReztlyFStringResponse* NetboxDevicesPatchResponse = NewObject<UReztlyFStringResponse>();
 			NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
 
 			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 			Request->OnProcessRequestComplete().BindUObject(
-				NetboxDevicesPatchResponse, &UReztlyResponse::OnResponse);
+				NetboxDevicesPatchResponse, &UReztlyFStringResponse::OnResponse);
 
 			Request->SetURL(NetboxUrl + "/dcim/sites/");
 
@@ -192,19 +227,20 @@ void UReztly::RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FStrin
 		});
 }
 
-void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
-					            FResponseDelegate OnNetboxDataResponse)
+void UReztly::RequestNetboxDevicesGet(
+	FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxDataResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[NetboxUrl, NetboxToken, OnNetboxDataResponse] ()
 	{
-		UReztlyResponse* NetboxDevicesGetResponse = NewObject<UReztlyResponse>();
+		UReztlyFStringResponse* NetboxDevicesGetResponse = NewObject<UReztlyFStringResponse>();
 		NetboxDevicesGetResponse->SetDelegate(OnNetboxDataResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			NetboxDevicesGetResponse, &UReztlyResponse::OnResponse);
+			NetboxDevicesGetResponse, &UReztlyFStringResponse::OnResponse);
 
 		FString URL = NetboxUrl + "/dcim/devices/?limit=0&offset=0";
 		Request->SetURL(URL);
@@ -222,20 +258,20 @@ void UReztly::RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
 	});
 }
 
-void UReztly::RequestNetboxDevicesPost(TArray<FDeviceStruct> Devices,
-						        FString NetboxUrl, FString NetboxToken, 
-					            FResponseDelegate OnNetboxPostResponse)
+void UReztly::RequestNetboxDevicesPost(
+	TArray<FDeviceStruct> Devices, FString NetboxUrl, FString NetboxToken, 
+	FStringResponseDelegate OnNetboxPostResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[Devices, NetboxUrl, NetboxToken, OnNetboxPostResponse]()
 		{
-			UReztlyResponse* NetboxDevicesPostResponse = NewObject<UReztlyResponse>();
+			UReztlyFStringResponse* NetboxDevicesPostResponse = NewObject<UReztlyFStringResponse>();
 			NetboxDevicesPostResponse->SetDelegate(OnNetboxPostResponse);
 
 			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 			Request->OnProcessRequestComplete().BindUObject(
-				NetboxDevicesPostResponse, &UReztlyResponse::OnResponse);
+				NetboxDevicesPostResponse, &UReztlyFStringResponse::OnResponse);
 
 			Request->SetURL(NetboxUrl + "/dcim/devices/");
 
@@ -278,20 +314,20 @@ void UReztly::RequestNetboxDevicesPost(TArray<FDeviceStruct> Devices,
 		});
 }
 
-void UReztly::RequestNetboxDevicesPatch(TArray<FDeviceStruct> Devices,
-								 FString NetboxUrl, FString NetboxToken,
-								 FResponseDelegate OnNetboxPatchResponse)
+void UReztly::RequestNetboxDevicesPatch(
+	TArray<FDeviceStruct> Devices, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
 		[Devices, NetboxUrl, NetboxToken, OnNetboxPatchResponse] ()
 	{
-		UReztlyResponse* NetboxDevicesPatchResponse = NewObject<UReztlyResponse>();
+		UReztlyFStringResponse* NetboxDevicesPatchResponse = NewObject<UReztlyFStringResponse>();
 		NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
 
 		FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 		
 		Request->OnProcessRequestComplete().BindUObject(
-			NetboxDevicesPatchResponse, &UReztlyResponse::OnResponse);
+			NetboxDevicesPatchResponse, &UReztlyFStringResponse::OnResponse);
 		
 		Request->SetURL(NetboxUrl + "/dcim/devices/");
 
@@ -332,4 +368,30 @@ void UReztly::RequestNetboxDevicesPatch(TArray<FDeviceStruct> Devices,
 
 		Request->ProcessRequest();
 	});
+}
+
+void UReztly::RequestImageGet(
+	FString ImageUrl, FImageResponseDelegate OnImageGetResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[ImageUrl, OnImageGetResponse]()
+		{
+			UReztlyImageResponse* ImageGetResponse = NewObject<UReztlyImageResponse>();
+			ImageGetResponse->SetDelegate(OnImageGetResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				ImageGetResponse, &UReztlyImageResponse::OnResponse);
+
+			FString URL = ImageUrl;
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
 }

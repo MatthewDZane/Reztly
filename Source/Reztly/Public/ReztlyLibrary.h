@@ -7,7 +7,8 @@
 #include "Http.h"
 #include "JsonParser.h"
 
-#include "ReztlyResponse.h"
+#include "ReztlyFStringResponse.h"
+#include "ReztlyImageResponse.h"
 #include "G2Node.h"
 #include "Site.h"
 
@@ -28,44 +29,57 @@ public:
 	static const int TBD_DEVICE_ROLE = 29;
 	
 	UFUNCTION(BlueprintCallable)
-		static void RequestBearerToken(FString G2Username, FString G2Password,
-			                           FString G2APIUrl, 
-									   FResponseDelegate OnBearerTokenResponse);
+		static void RequestBearerToken(
+			FString G2Username, FString G2Password, FString G2APIUrl, 
+			FStringResponseDelegate OnBearerTokenResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestSnapshotRange(FString G2APIUrl, FString G2BearerToken,
-								  FResponseDelegate OnSnapshotRangeResponse);
+		static void RequestSnapshotRange(
+			FString G2APIUrl, FString G2BearerToken,
+			FStringResponseDelegate OnSnapshotRangeResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestSnapshot(int SnapshotID, FString G2APIUrl, 
-								    FString G2BearerToken,
-									FResponseDelegate OnSnapshotResponse);
+		static void RequestSnapshot(
+			int SnapshotID, FString G2APIUrl, FString G2BearerToken,
+			FStringResponseDelegate OnSnapshotResponse);
 
 	UFUNCTION(BlueprintCallable)
 		static void RequestUE4NautilusData(
 			FString UE4NautilusDataUtilsUrl, 
-			FResponseDelegate OnUE4NautliusDataResponse);
+			FStringResponseDelegate OnUE4NautliusDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesGet(FString NetboxUrl, FString NetboxToken,
-                                      FResponseDelegate OnNetboxDataResponse);
+		static void RequestNetboxRegionsGet(
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxRegionsGetResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesPost(TArray<FDeviceStruct> Devices, FString NetboxUrl,
-									  FString NetboxToken, 
-							          FResponseDelegate OnNetboxPostResponse);
+		static void RequestNetboxSitesGet(
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxSitesGetResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxDevicesPatch(TArray<FDeviceStruct> Devices,
-									   FString NetboxUrl, FString NetboxToken,
-							           FResponseDelegate OnNetboxPatchResponse);
+		static void RequestNetboxSitePatch(
+			FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxPatchResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxSitesGet(FString NetboxUrl, FString NetboxToken,
-									FResponseDelegate OnNetboxDataResponse);
+		static void RequestNetboxDevicesGet(
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxDataResponse);
 
 	UFUNCTION(BlueprintCallable)
-		static void RequestNetboxSitePatch(FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
-								   FResponseDelegate OnNetboxPatchResponse);
-						    
+		static void RequestNetboxDevicesPost(
+			TArray<FDeviceStruct> Devices, FString NetboxUrl,
+			FString NetboxToken, FStringResponseDelegate OnNetboxPostResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxDevicesPatch(
+			TArray<FDeviceStruct> Devices,
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxPatchResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestImageGet(
+			FString ImageUrl, FImageResponseDelegate OnImageGetResponse);   
 };

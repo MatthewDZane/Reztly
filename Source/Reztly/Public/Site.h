@@ -4,6 +4,8 @@
 
 #include "NetboxSiteResponse.h"
 
+#include "Region.h"
+
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Site.generated.h"
@@ -32,6 +34,9 @@ public:
 	FString Name;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FString Slug;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FString RegionName;
+
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Latitude;
