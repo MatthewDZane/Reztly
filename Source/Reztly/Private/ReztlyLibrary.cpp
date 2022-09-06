@@ -159,6 +159,44 @@ void UReztly::RequestNetboxRegionsGet(
 		});
 }
 
+void UReztly::RequestNetboxRegionPatch(
+	FRegionStruct Region, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxPatchResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Region, NetboxUrl, NetboxToken, OnNetboxPatchResponse]()
+		{
+			UReztlyFStringResponse* NetboxDevicesPatchResponse = NewObject<UReztlyFStringResponse>();
+			NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxDevicesPatchResponse, &UReztlyFStringResponse::OnResponse);
+
+			Request->SetURL(NetboxUrl + "/dcim/sites/");
+
+			Request->SetVerb("PATCH");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			FString RequestBodyString = "[{\"id\":" + FString::FromInt(Region.Id) + 
+				",\"custom_fields\":{" + 
+					"\"region_latitude\":" + Region.Custom_fields.Region_latitude + 
+					",\"region_longitude\":" + Region.Custom_fields.Region_longitude + "}}]";
+
+			Request->SetContentAsString(RequestBodyString);
+
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
+
+			Request->ProcessRequest();
+		});
+}
+
 void UReztly::RequestNetboxSitesGet(
 	FString NetboxUrl, FString NetboxToken,
 	FStringResponseDelegate OnNetboxSitesGetResponse)

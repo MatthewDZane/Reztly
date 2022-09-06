@@ -54,6 +54,11 @@ public:
 			FStringResponseDelegate OnNetboxRegionsGetResponse);
 
 	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxRegionPatch(
+			FRegionStruct Region, FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxPatchResponse);
+
+	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxSitesGet(
 			FString NetboxUrl, FString NetboxToken,
 			FStringResponseDelegate OnNetboxSitesGetResponse);
