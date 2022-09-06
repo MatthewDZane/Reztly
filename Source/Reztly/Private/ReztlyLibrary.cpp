@@ -174,7 +174,7 @@ void UReztly::RequestNetboxRegionPatch(
 			Request->OnProcessRequestComplete().BindUObject(
 				NetboxDevicesPatchResponse, &UReztlyFStringResponse::OnResponse);
 
-			Request->SetURL(NetboxUrl + "/dcim/sites/");
+			Request->SetURL(NetboxUrl + "/dcim/regions/");
 
 			Request->SetVerb("PATCH");
 			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
