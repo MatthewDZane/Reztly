@@ -11,10 +11,10 @@
 #include "ReztlyImageResponse.h"
 #include "G2Node.h"
 #include "Site.h"
+#include "NetboxLocationResponse.h"
+#include "NetboxRackResponse.h"
 
 #include "ReztlyLibrary.generated.h"
-
-
 
 /**
  * 
@@ -66,7 +66,42 @@ public:
 	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxSitePatch(
 			FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
-			FStringResponseDelegate OnNetboxPatchResponse);
+			FStringResponseDelegate OnNetboxSitePatchResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxLocationsGet(
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxLocationsGetResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxLocationsGetBySite(
+			FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxLocationsGetBySiteResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxLocationPatch(
+			FLocationStruct Location, FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxLocationPatchResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxRacksGet(
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxRacksGetResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxRacksGetBySite(
+			FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxRacksGetBySiteResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxRacksGetByLocation(
+			FLocationStruct Location, FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxRacksGetByLocationResponse);
+
+	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxRackPatch(
+			FRackStruct Rack, FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxRackPatchResponse);
 
 	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxDevicesGet(

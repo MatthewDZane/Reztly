@@ -161,18 +161,18 @@ void UReztly::RequestNetboxRegionsGet(
 
 void UReztly::RequestNetboxRegionPatch(
 	FRegionStruct Region, FString NetboxUrl, FString NetboxToken,
-	FStringResponseDelegate OnNetboxPatchResponse)
+	FStringResponseDelegate OnNetboxRegionPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[Region, NetboxUrl, NetboxToken, OnNetboxPatchResponse]()
+		[Region, NetboxUrl, NetboxToken, OnNetboxRegionPatchResponse]()
 		{
-			UReztlyFStringResponse* NetboxDevicesPatchResponse = NewObject<UReztlyFStringResponse>();
-			NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
+			UReztlyFStringResponse* NetboxRegionPatchResponse = NewObject<UReztlyFStringResponse>();
+			NetboxRegionPatchResponse->SetDelegate(OnNetboxRegionPatchResponse);
 
 			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 			Request->OnProcessRequestComplete().BindUObject(
-				NetboxDevicesPatchResponse, &UReztlyFStringResponse::OnResponse);
+				NetboxRegionPatchResponse, &UReztlyFStringResponse::OnResponse);
 
 			Request->SetURL(NetboxUrl + "/dcim/regions/");
 
@@ -230,18 +230,18 @@ void UReztly::RequestNetboxSitesGet(
 
 void UReztly::RequestNetboxSitePatch(
 	FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
-	FStringResponseDelegate OnNetboxPatchResponse)
+	FStringResponseDelegate OnNetboxSitePatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
-		[Site, NetboxUrl, NetboxToken, OnNetboxPatchResponse]()
+		[Site, NetboxUrl, NetboxToken, OnNetboxSitePatchResponse]()
 		{
-			UReztlyFStringResponse* NetboxDevicesPatchResponse = NewObject<UReztlyFStringResponse>();
-			NetboxDevicesPatchResponse->SetDelegate(OnNetboxPatchResponse);
+			UReztlyFStringResponse* NetboxSitePatchResponse = NewObject<UReztlyFStringResponse>();
+			NetboxSitePatchResponse->SetDelegate(OnNetboxSitePatchResponse);
 
 			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
 
 			Request->OnProcessRequestComplete().BindUObject(
-				NetboxDevicesPatchResponse, &UReztlyFStringResponse::OnResponse);
+				NetboxSitePatchResponse, &UReztlyFStringResponse::OnResponse);
 
 			Request->SetURL(NetboxUrl + "/dcim/sites/");
 
@@ -255,6 +255,239 @@ void UReztly::RequestNetboxSitePatch(
 			FString RequestBodyString = "[{\"id\":" + FString::FromInt(Site.Id) + ",\"latitude\":" +
 				FString::SanitizeFloat(Site.Latitude) + ",\"longitude\":" +
 				FString::SanitizeFloat(Site.Longitude) + "}]";
+
+			Request->SetContentAsString(RequestBodyString);
+
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxLocationsGet(
+	FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxLocationsGetResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[NetboxUrl, NetboxToken, OnNetboxLocationsGetResponse]()
+		{
+			UReztlyFStringResponse* NetboxLocationsGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxLocationsGetResponse->SetDelegate(OnNetboxLocationsGetResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxLocationsGetResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/locations/?limit=0&offset=0";
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxLocationsGetBySite(
+	FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxLocationsGetBySiteResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Site, NetboxUrl, NetboxToken, OnNetboxLocationsGetBySiteResponse]()
+		{
+			UReztlyFStringResponse* NetboxLocationsGetBySiteResponse = NewObject<UReztlyFStringResponse>();
+			NetboxLocationsGetBySiteResponse->SetDelegate(OnNetboxLocationsGetBySiteResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxLocationsGetBySiteResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/locations/?limit=0&offset=0&site=" + Site.Slug;
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxLocationPatch(
+	FLocationStruct Location, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxLocationPatchResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Location, NetboxUrl, NetboxToken, OnNetboxLocationPatchResponse]()
+		{
+			UReztlyFStringResponse* NetboxLocationPatchResponse = NewObject<UReztlyFStringResponse>();
+			NetboxLocationPatchResponse->SetDelegate(OnNetboxLocationPatchResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxLocationPatchResponse, &UReztlyFStringResponse::OnResponse);
+
+			Request->SetURL(NetboxUrl + "/dcim/locations/");
+
+			Request->SetVerb("PATCH");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			FString RequestBodyString = "[{\"id\":" + FString::FromInt(Location.Id) +
+				",\"custom_fields\":{" +
+				"\"location_world_location_offset\":" + Location.Custom_fields.Location_world_location_offset +
+				",\"location_world_rotation_offset\":" + Location.Custom_fields.Location_world_rotation_offset + "}}]";
+
+			Request->SetContentAsString(RequestBodyString);
+
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *Request->GetURL());
+			UE_LOG(LogTemp, Log, TEXT("PATCH %s"), *RequestBodyString);
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxRacksGet(
+	FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxRacksGetResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[NetboxUrl, NetboxToken, OnNetboxRacksGetResponse]()
+		{
+			UReztlyFStringResponse* NetboxRacksGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxRacksGetResponse->SetDelegate(OnNetboxRacksGetResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxRacksGetResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/rack/?limit=0&offset=0";
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxRacksGetBySite(
+	FSiteStruct Site, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxRacksGetResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Site, NetboxUrl, NetboxToken, OnNetboxRacksGetResponse]()
+		{
+			UReztlyFStringResponse* NetboxRacksGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxRacksGetResponse->SetDelegate(OnNetboxRacksGetResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxRacksGetResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/rack/?limit=0&offset=0&site=" + Site.Slug;
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxRacksGetByLocation(
+	FLocationStruct Location, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxRacksGetResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Location, NetboxUrl, NetboxToken, OnNetboxRacksGetResponse]()
+		{
+			UReztlyFStringResponse* NetboxLocationsGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxLocationsGetResponse->SetDelegate(OnNetboxRacksGetResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxLocationsGetResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/rack/?limit=0&offset=0&location=" + Location.Slug;
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
+void UReztly::RequestNetboxRackPatch(
+	FRackStruct Rack, FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxRackPatchResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[Rack, NetboxUrl, NetboxToken, OnNetboxRackPatchResponse]()
+		{
+			UReztlyFStringResponse* NetboxRackPatchResponse = NewObject<UReztlyFStringResponse>();
+			NetboxRackPatchResponse->SetDelegate(OnNetboxRackPatchResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxRackPatchResponse, &UReztlyFStringResponse::OnResponse);
+
+			Request->SetURL(NetboxUrl + "/dcim/racks/");
+
+			Request->SetVerb("PATCH");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			FString RequestBodyString = "[{\"id\":" + FString::FromInt(Rack.Id) +
+				",\"custom_fields\":{" +
+				"\"rack_latitude\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_latitude) +
+				"\"rack_longitude\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_longitude) +
+				"\"rack_world_location_offset\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_world_location_offset) +
+				",\"rack_world_rotation_offset\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_world_rotation_offset) + "}}]";
 
 			Request->SetContentAsString(RequestBodyString);
 
@@ -381,7 +614,7 @@ void UReztly::RequestNetboxDevicesPatch(
 		for (int i = 0; i < Devices.Num(); i++)
 		{
 			FDeviceStruct Device = Devices[i];
-			FString NodeBodyString = 
+			FString DeviceBodyString = 
 				"{\"id\":" + FString::FromInt(Device.Id) +
 				",\"name\":\"" + Device.Name + 
 				"\",\"custom_fields\":{" +
@@ -390,7 +623,7 @@ void UReztly::RequestNetboxDevicesPatch(
 					",\"primary\":" + (Device.Custom_fields.Primary ? "true" : "false") +
 				"}}";
 
-			RequestBodyString += NodeBodyString;
+			RequestBodyString += DeviceBodyString;
 
 			if (i < Devices.Num() - 1)
 			{

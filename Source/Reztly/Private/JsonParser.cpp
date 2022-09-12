@@ -282,6 +282,50 @@ FJsonObjectWrapper UJsonParser::StructToNetboxSiteResponseObject(FNetboxSiteResp
 	return JsonWrapper;
 }
 
+FNetboxLocationResponse UJsonParser::StringToNetboxLocationResponse(FString JsonString)
+{
+	FNetboxLocationResponse Response;
+	if (FJsonObjectConverter::JsonObjectStringToUStruct(JsonString, &Response))
+	{
+		return Response;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Error: could not parse string"));
+		return FNetboxLocationResponse();
+	}
+}
+
+FJsonObjectWrapper UJsonParser::StructToNetboxLocationResponseObject(FNetboxLocationResponse Response)
+{
+	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
+	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
+		<FNetboxLocationResponse>(Response);
+	return JsonWrapper;
+}
+
+FNetboxRackResponse UJsonParser::StringToNetboxRackResponse(FString JsonString)
+{
+	FNetboxRackResponse Response;
+	if (FJsonObjectConverter::JsonObjectStringToUStruct(JsonString, &Response))
+	{
+		return Response;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Error: could not parse string"));
+		return FNetboxRackResponse();
+	}
+}
+
+FJsonObjectWrapper UJsonParser::StructToNetboxRackResponseObject(FNetboxRackResponse Response)
+{
+	FJsonObjectWrapper JsonWrapper = FJsonObjectWrapper();
+	JsonWrapper.JsonObject = FJsonObjectConverter::UStructToJsonObject
+		<FNetboxRackResponse>(Response);
+	return JsonWrapper;
+}
+
 FNetboxDeviceResponse UJsonParser::StringToNetboxDeviceResponse(FString JsonString)
 {
 	FNetboxDeviceResponse Response;

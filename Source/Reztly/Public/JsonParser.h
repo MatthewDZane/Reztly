@@ -14,6 +14,8 @@
 #include "NetboxRegionResponse.h"
 #include "NetboxSiteResponse.h"
 #include "NetboxDeviceResponse.h"
+#include "NetboxLocationResponse.h"
+#include "NetboxRackResponse.h"
 
 #include "Kismet/BlueprintFunctionLibrary.h"
 
@@ -81,20 +83,6 @@ public:
 	static FJsonObjectWrapper StructToUE4ResponseObject(FUE4Response Response);
 
 
-	// Netbox Device Response Functions //
-	/**
-	* Converts a Netbox Device Response FString to a FNetboxDeviceResponse struct
-	*/
-	UFUNCTION(BlueprintCallable)
-	static FNetboxDeviceResponse StringToNetboxDeviceResponse(FString JsonString);
-	
-	/**
-	* Converts a FNetboxDeviceResponse to a FJsonObjectWrapper
-	*/
-	UFUNCTION(BlueprintCallable)
-	static FJsonObjectWrapper StructToNetboxDeviceResponseObject(FNetboxDeviceResponse Response);
-
-
 	// Netbox Region Response Functions //
 	/**
 	* Converts a Netbox Region Response FString to a FNetboxRegionResponse struct
@@ -121,6 +109,48 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable)
 	static FJsonObjectWrapper StructToNetboxSiteResponseObject(FNetboxSiteResponse Response);
+
+
+	// Netbox Location Response Functions //
+	/**
+	* Converts a Netbox Location Response FString to a FNetboxLocationResponse struct
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FNetboxLocationResponse StringToNetboxLocationResponse(FString JsonString);
+
+	/**
+	* Converts a FNetboxLocationResponse to a FJsonObjectWrapper
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FJsonObjectWrapper StructToNetboxLocationResponseObject(FNetboxLocationResponse Response);
+
+
+	// Netbox Rack Response Functions //
+	/**
+	* Converts a Netbox Rack Response FString to a FNetboxRackResponse struct
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FNetboxRackResponse StringToNetboxRackResponse(FString JsonString);
+
+	/**
+	* Converts a FNetboxRackResponse to a FJsonObjectWrapper
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FJsonObjectWrapper StructToNetboxRackResponseObject(FNetboxRackResponse Response);
+
+
+	// Netbox Device Response Functions //
+	/**
+	* Converts a Netbox Device Response FString to a FNetboxDeviceResponse struct
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FNetboxDeviceResponse StringToNetboxDeviceResponse(FString JsonString);
+
+	/**
+	* Converts a FNetboxDeviceResponse to a FJsonObjectWrapper
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FJsonObjectWrapper StructToNetboxDeviceResponseObject(FNetboxDeviceResponse Response);
 
 
 	// Post Response Functions //

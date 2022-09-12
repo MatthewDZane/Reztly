@@ -39,4 +39,26 @@ public:
 	FString Label;
 };
 
+USTRUCT(BlueprintType)
+struct FNetboxType
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+		FString Value;
+	UPROPERTY(BlueprintReadWrite)
+		FString Label;
+};
+
+USTRUCT(BlueprintType)
+struct FNetboxWidth
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+		FString Value;
+	UPROPERTY(BlueprintReadWrite)
+		FString Label;
+};
+
 
