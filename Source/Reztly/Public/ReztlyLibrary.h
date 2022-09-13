@@ -49,6 +49,11 @@ public:
 			FStringResponseDelegate OnUE4NautliusDataResponse);
 
 	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxGet(
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxRegionsGetResponse);
+
+	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxRegionsGet(
 			FString NetboxUrl, FString NetboxToken,
 			FStringResponseDelegate OnNetboxRegionsGetResponse);

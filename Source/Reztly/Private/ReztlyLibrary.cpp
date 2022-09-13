@@ -128,6 +128,37 @@ void UReztly::RequestUE4NautilusData(
 	});
 }
 
+void UReztly::RequestNetboxGet(
+	FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[NetboxUrl, NetboxToken, OnNetboxResponse]()
+		{
+			UReztlyFStringResponse* NetboxGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxGetResponse->SetDelegate(OnNetboxResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxGetResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl;
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
 void UReztly::RequestNetboxRegionsGet(
 	FString NetboxUrl, FString NetboxToken,
 	FStringResponseDelegate OnNetboxRegionsResponse)
@@ -557,7 +588,7 @@ void UReztly::RequestNetboxDevicesPost(
 			for (int i = 0; i < Devices.Num(); i++) {
 				FDeviceStruct Device = Devices[i];
 				FString NodeBodyString = 
-					"{\"name\":\"" + Device.Name + 
+					"{\"name\":\"" + Device.Name +
 					"\",\"device_type\":" + FString::FromInt(TBD_DEVICE_TYPE_ID) + 
 					",\"device_role\":" + FString::FromInt(TBD_DEVICE_ROLE) + 
 					",\"site\":" + FString::FromInt(Device.Site.Id) +
