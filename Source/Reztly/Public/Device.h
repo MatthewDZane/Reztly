@@ -6,6 +6,7 @@
 #include "UObject/NoExportTypes.h"
 
 #include "Site.h"
+#include "Rack.h"
 
 #include "Device.generated.h"
 
@@ -22,26 +23,30 @@ public:
 	~UDevice();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int ID;
+		int ID;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FString Url;
+		FString Url;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FString Display;
+		FString Display;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FString Name;
+		FString Name;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FString IP;
+		FString IP;
 
 	// Custom Fields
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FString Info;
+		FString Info;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int MTU;
+		int MTU;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool Primary;
+		bool Primary;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	USite* Site;
+		USite* Site;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		ULocation* Location;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		URack* Rack;
 
 	UFUNCTION(BlueprintCallable)
 	FDeviceStruct ToStruct();

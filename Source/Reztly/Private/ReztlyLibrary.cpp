@@ -411,7 +411,7 @@ void UReztly::RequestNetboxRacksGet(
 			Request->OnProcessRequestComplete().BindUObject(
 				NetboxRacksGetResponse, &UReztlyFStringResponse::OnResponse);
 
-			FString URL = NetboxUrl + "/dcim/rack/?limit=0&offset=0";
+			FString URL = NetboxUrl + "/dcim/racks/?limit=0&offset=0";
 			Request->SetURL(URL);
 
 			Request->SetVerb("GET");
@@ -442,7 +442,7 @@ void UReztly::RequestNetboxRacksGetBySite(
 			Request->OnProcessRequestComplete().BindUObject(
 				NetboxRacksGetResponse, &UReztlyFStringResponse::OnResponse);
 
-			FString URL = NetboxUrl + "/dcim/rack/?limit=0&offset=0&site=" + Site.Slug;
+			FString URL = NetboxUrl + "/dcim/racks/?limit=0&offset=0&site=" + Site.Slug;
 			Request->SetURL(URL);
 
 			Request->SetVerb("GET");
@@ -473,7 +473,7 @@ void UReztly::RequestNetboxRacksGetByLocation(
 			Request->OnProcessRequestComplete().BindUObject(
 				NetboxLocationsGetResponse, &UReztlyFStringResponse::OnResponse);
 
-			FString URL = NetboxUrl + "/dcim/rack/?limit=0&offset=0&location=" + Location.Slug;
+			FString URL = NetboxUrl + "/dcim/racks/?limit=0&offset=0&location=" + Location.Slug;
 			Request->SetURL(URL);
 
 			Request->SetVerb("GET");
@@ -517,8 +517,8 @@ void UReztly::RequestNetboxRackPatch(
 				",\"custom_fields\":{" +
 				"\"rack_latitude\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_latitude) +
 				"\"rack_longitude\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_longitude) +
-				"\"rack_world_location_offset\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_world_location_offset) +
-				",\"rack_world_rotation_offset\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_world_rotation_offset) + "}}]";
+				"\"rack_world_location_offset\":" + Rack.Custom_fields.Rack_world_location_offset +
+				",\"rack_world_rotation_offset\":" + Rack.Custom_fields.Rack_world_rotation_offset + "}}]";
 
 			Request->SetContentAsString(RequestBodyString);
 

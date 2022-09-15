@@ -16,9 +16,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		float Rack_longitude;
 	UPROPERTY(BlueprintReadWrite)
-		float Rack_world_location_offset;
+		FString Rack_world_location_offset;
 	UPROPERTY(BlueprintReadWrite)
-		float Rack_world_rotation_offset;
+		FString Rack_world_rotation_offset;
 };
 
 USTRUCT(BlueprintType)
@@ -75,7 +75,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		FString Facility_id;
 	UPROPERTY(BlueprintReadWrite)
-		FRackLocation Site;
+		FRackSite Site;
+	UPROPERTY(BlueprintReadWrite)
+		FRackLocation Location;
 	UPROPERTY(BlueprintReadWrite)
 		FTenant Tenant;
 	UPROPERTY(BlueprintReadWrite)
@@ -95,13 +97,13 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		bool Desc_units;
 	UPROPERTY(BlueprintReadWrite)
-		int outer_width;
+		int Outer_width;
 	UPROPERTY(BlueprintReadWrite)
 		int Outer_depth;
 	UPROPERTY(BlueprintReadWrite)
 		int Outer_unit;
 	UPROPERTY(BlueprintReadWrite)
-		FString comments;
+		FString Comments;
 	UPROPERTY(BlueprintReadWrite)
 		TArray<FTag> Tags;
 	UPROPERTY(BlueprintReadWrite)

@@ -94,7 +94,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FLocation
+struct FDeviceLocation
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -113,7 +113,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FRack
+struct FDeviceRack
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -301,9 +301,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FDeviceSite Site;
 	UPROPERTY(BlueprintReadWrite)
-	FLocation Location;
+	FDeviceLocation Location;
 	UPROPERTY(BlueprintReadWrite)
-	FRack Rack;
+	FDeviceRack Rack;
 	UPROPERTY(BlueprintReadWrite)
 	int Position;
 	UPROPERTY(BlueprintReadWrite)

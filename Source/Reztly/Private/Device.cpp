@@ -27,5 +27,20 @@ FDeviceStruct UDevice::ToStruct() {
 		Device.Site.Slug = Site->Slug;
 	}
 
+	if (Location != nullptr) {
+		Device.Location.Id = Location->ID;
+		Device.Location.Url = Location->Url;
+		Device.Location.Display = Location->Display;
+		Device.Location.Name = Location->Name;
+		Device.Location.Slug = Location->Slug;
+	}
+
+	if (Rack != nullptr) {
+		Device.Rack.Id = Rack->ID;
+		Device.Rack.Url = Rack->Url;
+		Device.Rack.Display = Rack->Display;
+		Device.Rack.Name = Rack->Name;
+	}
+
 	return Device;
 }
