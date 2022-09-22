@@ -216,8 +216,8 @@ void UReztly::RequestNetboxRegionPatch(
 
 			FString RequestBodyString = "[{\"id\":" + FString::FromInt(Region.Id) + 
 				",\"custom_fields\":{" + 
-					"\"region_latitude\":" + Region.Custom_fields.Region_latitude + 
-					",\"region_longitude\":" + Region.Custom_fields.Region_longitude + "}}]";
+					"\"region_latitude\":\"" + Region.Custom_fields.Region_latitude + 
+					"\",\"region_longitude\":\"" + Region.Custom_fields.Region_longitude + "\"}}]";
 
 			Request->SetContentAsString(RequestBodyString);
 
@@ -384,8 +384,8 @@ void UReztly::RequestNetboxLocationPatch(
 
 			FString RequestBodyString = "[{\"id\":" + FString::FromInt(Location.Id) +
 				",\"custom_fields\":{" +
-				"\"location_world_location_offset\":" + Location.Custom_fields.Location_world_location_offset +
-				",\"location_world_rotation_offset\":" + Location.Custom_fields.Location_world_rotation_offset + "}}]";
+				"\"location_world_location_offset\":\"" + Location.Custom_fields.Location_world_location_offset +
+				"\",\"location_world_rotation_offset\":\"" + Location.Custom_fields.Location_world_rotation_offset + "\"}}]";
 
 			Request->SetContentAsString(RequestBodyString);
 
@@ -517,8 +517,8 @@ void UReztly::RequestNetboxRackPatch(
 				",\"custom_fields\":{" +
 				"\"rack_latitude\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_latitude) +
 				"\"rack_longitude\":" + FString::SanitizeFloat(Rack.Custom_fields.Rack_longitude) +
-				"\"rack_world_location_offset\":" + Rack.Custom_fields.Rack_world_location_offset +
-				",\"rack_world_rotation_offset\":" + Rack.Custom_fields.Rack_world_rotation_offset + "}}]";
+				"\"rack_world_location_offset\":\"" + Rack.Custom_fields.Rack_world_location_offset +
+				"\",\"rack_world_rotation_offset\":\"" + Rack.Custom_fields.Rack_world_rotation_offset + "\"}}]";
 
 			Request->SetContentAsString(RequestBodyString);
 

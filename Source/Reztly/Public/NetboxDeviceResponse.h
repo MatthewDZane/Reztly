@@ -253,8 +253,6 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	int Mtu;
 	UPROPERTY(BlueprintReadWrite)
-	bool Override_location;
-	UPROPERTY(BlueprintReadWrite)
 	bool Primary;
 	UPROPERTY(BlueprintReadWrite)
 	FString Elevation;
