@@ -31,8 +31,8 @@ FRackStruct URack::ToStruct() {
 
 	Rack.Custom_fields.Rack_latitude = RackLatitude;
 	Rack.Custom_fields.Rack_longitude = RackLongitude;
-	Rack.Custom_fields.Rack_world_location_offset = RackWorldLocationOffset.ToString();
-	Rack.Custom_fields.Rack_world_rotation_offset = RackWorldRotationOffset.ToString();
+	Rack.Custom_fields.Rack_world_location_offset = WorldLocationOffset.ToString();
+	Rack.Custom_fields.Rack_world_rotation_offset = WorldRotationOffset.ToString();
 
 	if (Site != nullptr) {
 		Rack.Site.Id = Site->ID;

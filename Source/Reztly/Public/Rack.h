@@ -61,9 +61,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		float RackLongitude;
 	UPROPERTY(BlueprintReadWrite)
-		FVector RackWorldLocationOffset;
+		FVector WorldLocationOffset;
 	UPROPERTY(BlueprintReadWrite)
-		FRotator RackWorldRotationOffset;
+		FRotator WorldRotationOffset;
 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
