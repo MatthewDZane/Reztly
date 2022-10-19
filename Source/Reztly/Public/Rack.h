@@ -44,7 +44,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		FString Type;
 	UPROPERTY(BlueprintReadWrite)
-		FString Width;
+		float Width;
 
 	UPROPERTY(BlueprintReadWrite)
 		int OuterWidth;

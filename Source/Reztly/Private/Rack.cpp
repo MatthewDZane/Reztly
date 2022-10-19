@@ -21,7 +21,8 @@ FRackStruct URack::ToStruct() {
 	Rack.Serial = Serial;
 	Rack.Asset_tag = AssetTag;
 	Rack.Type.Value = Type;
-	Rack.Width.Value = Width;
+	Rack.Width.Value = FString::SanitizeFloat(Width);
+	Rack.Width.Label = Rack.Width.Value + " inches";
 
 	Rack.Outer_width = OuterWidth;
 	Rack.Outer_depth = OuterDepth;
