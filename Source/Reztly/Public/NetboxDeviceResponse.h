@@ -3,44 +3,9 @@
 #pragma once
 
 #include "NetboxResponse.h"
+#include "NetboxDeviceTypeResponse.h"
 
 #include "NetboxDeviceResponse.generated.h"
-
-USTRUCT(BlueprintType)
-struct FManufacturer
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	UPROPERTY(BlueprintReadWrite)
-	int Id;
-	UPROPERTY(BlueprintReadWrite)
-	FString Url;
-	UPROPERTY(BlueprintReadWrite)
-	FString Display;
-	UPROPERTY(BlueprintReadWrite)
-	FString Name;
-	UPROPERTY(BlueprintReadWrite)
-	FString Slug;
-};
-
-USTRUCT(BlueprintType)
-struct FDeviceType
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	UPROPERTY(BlueprintReadWrite)
-	int Id;
-	UPROPERTY(BlueprintReadWrite)
-	FString Url;
-	UPROPERTY(BlueprintReadWrite)
-	FString Display;
-	UPROPERTY(BlueprintReadWrite)
-	FManufacturer Manufacturer;
-	UPROPERTY(BlueprintReadWrite)
-	FString Name;
-	UPROPERTY(BlueprintReadWrite)
-	FString Slug;
-};
 
 USTRUCT(BlueprintType)
 struct FDeviceRole
@@ -285,7 +250,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FString Name;
 	UPROPERTY(BlueprintReadWrite)
-	FDeviceType Device_Type;
+	FNetboxDeviceType Device_Type;
 	UPROPERTY(BlueprintReadWrite)
 	FDeviceRole Device_Role;
 	UPROPERTY(BlueprintReadWrite)

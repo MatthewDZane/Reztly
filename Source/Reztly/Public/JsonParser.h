@@ -153,6 +153,20 @@ public:
 		static FJsonObjectWrapper StructToNetboxDeviceResponseObject(FNetboxDeviceResponse Response);
 
 
+	// Netbox Device Type Response Functions //
+	/**
+	* Converts a Netbox Device Response FString to a FNetboxDeviceResponse struct
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FNetboxDeviceTypeResponse StringToNetboxDeviceTypeResponse(FString JsonString);
+
+	/**
+	* Converts a FNetboxDeviceTypeResponse to a FJsonObjectWrapper
+	*/
+	UFUNCTION(BlueprintCallable)
+		static FJsonObjectWrapper StructToNetboxDeviceTypeResponseObject(FNetboxDeviceTypeResponse Response);
+
+
 	// Post Response Functions //
 	/**
 	* Converts a Netbox Post or Put Response FString to a TArray of

@@ -109,9 +109,14 @@ public:
 			FStringResponseDelegate OnNetboxRackPatchResponse);
 
 	UFUNCTION(BlueprintCallable)
+		static void RequestNetboxDeviceTypesGet(
+			FString NetboxUrl, FString NetboxToken,
+			FStringResponseDelegate OnNetboxDevicesTypeGetResponse);
+
+	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxDevicesGet(
 			FString NetboxUrl, FString NetboxToken,
-			FStringResponseDelegate OnNetboxDataResponse);
+			FStringResponseDelegate OnNetboxDeviceGetResponse);
 
 	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxDevicesPost(

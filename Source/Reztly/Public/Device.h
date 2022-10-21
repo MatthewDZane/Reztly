@@ -7,6 +7,7 @@
 
 #include "Site.h"
 #include "Rack.h"
+#include "DeviceType.h"
 
 #include "Device.generated.h"
 
@@ -32,6 +33,8 @@ public:
 		FString Name;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FString IP;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int Position;
 
 	// Custom Fields
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -47,6 +50,8 @@ public:
 		ULocation* Location;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		URack* Rack;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		UDeviceType* DeviceType;
 
 	UFUNCTION(BlueprintCallable)
 	FDeviceStruct ToStruct();

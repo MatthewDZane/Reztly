@@ -529,6 +529,37 @@ void UReztly::RequestNetboxRackPatch(
 		});
 }
 
+void UReztly::RequestNetboxDeviceTypesGet(
+	FString NetboxUrl, FString NetboxToken,
+	FStringResponseDelegate OnNetboxDataResponse)
+{
+	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
+		[NetboxUrl, NetboxToken, OnNetboxDataResponse]()
+		{
+			UReztlyFStringResponse* NetboxDeviceTypessGetResponse = NewObject<UReztlyFStringResponse>();
+			NetboxDeviceTypessGetResponse->SetDelegate(OnNetboxDataResponse);
+
+			FHttpRequestPtr Request = FHttpModule::Get().CreateRequest();
+
+			Request->OnProcessRequestComplete().BindUObject(
+				NetboxDeviceTypessGetResponse, &UReztlyFStringResponse::OnResponse);
+
+			FString URL = NetboxUrl + "/dcim/device-types/?limit=0&offset=0";
+			Request->SetURL(URL);
+
+			Request->SetVerb("GET");
+			Request->SetHeader("User-Agent", "X-UnrealEngine-Agent");
+			Request->SetHeader("Content-Type", "application/json");
+
+			FString AuthorizationValue = "Token " + NetboxToken;
+			Request->SetHeader("Authorization", AuthorizationValue);
+
+			UE_LOG(LogTemp, Log, TEXT("GET %s"), *Request->GetURL());
+
+			Request->ProcessRequest();
+		});
+}
+
 void UReztly::RequestNetboxDevicesGet(
 	FString NetboxUrl, FString NetboxToken,
 	FStringResponseDelegate OnNetboxDataResponse)
