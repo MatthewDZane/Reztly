@@ -214,6 +214,10 @@ struct FCustomDeviceFields
 	GENERATED_USTRUCT_BODY()
 public:
 	UPROPERTY(BlueprintReadWrite)
+	FString	Device_world_location_offset;
+	UPROPERTY(BlueprintReadWrite)
+	FString	Device_world_rotation_offset;
+	UPROPERTY(BlueprintReadWrite)
 	FString Info;
 	UPROPERTY(BlueprintReadWrite)
 	int Mtu;
@@ -237,7 +241,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FDeviceStruct
+struct FNetboxDevice
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -319,5 +323,5 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool Previous;
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FDeviceStruct> Results;
+	TArray<FNetboxDevice> Results;
 };

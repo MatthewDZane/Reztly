@@ -120,12 +120,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxDevicesPost(
-			TArray<FDeviceStruct> Devices, FString NetboxUrl,
+			TArray<FNetboxDevice> Devices, FString NetboxUrl,
 			FString NetboxToken, FStringResponseDelegate OnNetboxPostResponse);
 
 	UFUNCTION(BlueprintCallable)
 		static void RequestNetboxDevicesPatch(
-			TArray<FDeviceStruct> Devices,
+			TArray<FNetboxDevice> Devices,
 			FString NetboxUrl, FString NetboxToken,
 			FStringResponseDelegate OnNetboxPatchResponse);
 

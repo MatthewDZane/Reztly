@@ -37,6 +37,10 @@ public:
 		int Position;
 
 	// Custom Fields
+	UPROPERTY(BlueprintReadWrite)
+		FVector WorldLocationOffset;
+	UPROPERTY(BlueprintReadWrite)
+		FRotator WorldRotationOffset;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FString Info;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -54,5 +58,5 @@ public:
 		UDeviceType* DeviceType;
 
 	UFUNCTION(BlueprintCallable)
-	FDeviceStruct ToStruct();
+	FNetboxDevice ToStruct();
 };

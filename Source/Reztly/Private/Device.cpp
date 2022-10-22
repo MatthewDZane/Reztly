@@ -8,13 +8,15 @@ UDevice::~UDevice() {
 
 }
 
-FDeviceStruct UDevice::ToStruct() {
-	FDeviceStruct Device;
+FNetboxDevice UDevice::ToStruct() {
+	FNetboxDevice Device;
 	Device.Id = ID;
 	Device.Url = Url;
 	Device.Name = Name;
 	Device.Primary_ip.Address = IP;
 
+	Device.Custom_fields.Device_world_location_offset = WorldLocationOffset.ToString();
+	Device.Custom_fields.Device_world_rotation_offset = WorldRotationOffset.ToString();
 	Device.Custom_fields.Info = Info;
 	Device.Custom_fields.Mtu = MTU;
 	Device.Custom_fields.Primary = Primary;

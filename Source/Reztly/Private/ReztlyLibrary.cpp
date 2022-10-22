@@ -592,7 +592,7 @@ void UReztly::RequestNetboxDevicesGet(
 }
 
 void UReztly::RequestNetboxDevicesPost(
-	TArray<FDeviceStruct> Devices, FString NetboxUrl, FString NetboxToken, 
+	TArray<FNetboxDevice> Devices, FString NetboxUrl, FString NetboxToken, 
 	FStringResponseDelegate OnNetboxPostResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
@@ -617,7 +617,7 @@ void UReztly::RequestNetboxDevicesPost(
 
 			FString RequestBodyString = "[";
 			for (int i = 0; i < Devices.Num(); i++) {
-				FDeviceStruct Device = Devices[i];
+				FNetboxDevice Device = Devices[i];
 				FString NodeBodyString = 
 					"{\"name\":\"" + Device.Name +
 					"\",\"device_type\":" + FString::FromInt(TBD_DEVICE_TYPE_ID) + 
@@ -648,7 +648,7 @@ void UReztly::RequestNetboxDevicesPost(
 }
 
 void UReztly::RequestNetboxDevicesPatch(
-	TArray<FDeviceStruct> Devices, FString NetboxUrl, FString NetboxToken,
+	TArray<FNetboxDevice> Devices, FString NetboxUrl, FString NetboxToken,
 	FStringResponseDelegate OnNetboxPatchResponse)
 {
 	AsyncTask(ENamedThreads::AnyBackgroundHiPriTask,
@@ -675,7 +675,7 @@ void UReztly::RequestNetboxDevicesPatch(
 
 		for (int i = 0; i < Devices.Num(); i++)
 		{
-			FDeviceStruct Device = Devices[i];
+			FNetboxDevice Device = Devices[i];
 			FString DeviceBodyString = 
 				"{\"id\":" + FString::FromInt(Device.Id) +
 				",\"name\":\"" + Device.Name + 
