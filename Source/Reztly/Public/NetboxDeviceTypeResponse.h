@@ -47,13 +47,13 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		FString Part_number;
 	UPROPERTY(BlueprintReadWrite)
-		FString U_height;
+		float U_height;
 	UPROPERTY(BlueprintReadWrite)
-		FString Is_full_depth;
+		bool Is_full_depth;
 	UPROPERTY(BlueprintReadWrite)
-		FString Subdevice_role;
+		FNetboxStatus Subdevice_role;
 	UPROPERTY(BlueprintReadWrite)
-		FString Airflow;
+		FNetboxStatus Airflow;
 	UPROPERTY(BlueprintReadWrite)
 		FString Front_image;
 	UPROPERTY(BlueprintReadWrite)
@@ -61,7 +61,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		FString Comments;
 	UPROPERTY(BlueprintReadWrite)
-		FString Tags;
+		TArray<FTag> Tags;
 	UPROPERTY(BlueprintReadWrite)
 		FCustomDeviceTypeFields Custom_fields;
 	UPROPERTY(BlueprintReadWrite)

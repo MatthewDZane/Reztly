@@ -678,9 +678,14 @@ void UReztly::RequestNetboxDevicesPatch(
 			FNetboxDevice Device = Devices[i];
 			FString DeviceBodyString = 
 				"{\"id\":" + FString::FromInt(Device.Id) +
-				",\"name\":\"" + Device.Name + 
-				"\",\"custom_fields\":{" +
-					"\"info\":\"" + Device.Custom_fields.Info + 
+				",\"name\":\"" + Device.Name +
+				"\",\"Site_id\":" + FString::FromInt(Device.Site.Id) +
+				",\"Location_id\":" + FString::FromInt(Device.Location.Id) +
+				",\"Rack_id\":" + FString::FromInt(Device.Rack.Id) +
+				",\"custom_fields\":{" +
+					"\"device_world_location_offset\":\"" + Device.Custom_fields.Device_world_location_offset +
+					"\",\"device_world_rotation_offset\":\"" + Device.Custom_fields.Device_world_rotation_offset +
+					"\",\"info\":\"" + Device.Custom_fields.Info + 
 					"\",\"mtu\":" + FString::FromInt(Device.Custom_fields.Mtu) + 
 					",\"primary\":" + (Device.Custom_fields.Primary ? "true" : "false") +
 				"}}";
