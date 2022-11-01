@@ -46,6 +46,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		float Width;
 
+
+	UPROPERTY(BlueprintReadWrite)
+		int UHeight;
 	UPROPERTY(BlueprintReadWrite)
 		int OuterWidth;
 	UPROPERTY(BlueprintReadWrite)
