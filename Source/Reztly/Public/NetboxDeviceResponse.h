@@ -234,7 +234,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FConfigContext
+struct FReztlyConfigContext
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -304,7 +304,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FCustomDeviceFields Custom_fields;
 	UPROPERTY(BlueprintReadWrite)
-	FConfigContext Custom_context;
+	FReztlyConfigContext Custom_context;
 	UPROPERTY(BlueprintReadWrite)
 	FString Created;
 	UPROPERTY(BlueprintReadWrite)
